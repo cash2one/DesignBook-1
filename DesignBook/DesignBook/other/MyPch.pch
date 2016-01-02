@@ -1,0 +1,25 @@
+//
+//  MyPch.pch
+//  良仓
+//
+//  Created by 陈行 on 15-12-15.
+//  Copyright (c) 2015年 陈行. All rights reserved.
+//
+
+
+#define WIDTH [UIScreen mainScreen].bounds.size.width
+#define HEIGHT [UIScreen mainScreen].bounds.size.height
+
+#define KUMengKey @"566e181067e58ef04c003342"
+
+#define SERVER_URL @"http://www.shejiben.com/mobile/index.php?"
+
+#define DEVICE_INFO @""
+
+#define CASE_LIST_URL (SERVER_URL@"action=index&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=cases&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
+
+
+#define CASE_SCROLLVIEW_URL (SERVER_URL@"action=jiexiDetail&appid=30&appostype=2&appversion=2.2.0&channel=appstore&id=%ld&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=cases&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
+
+#define CASE_DETAIL_URL (SERVER_URL@"action=detail&appid=30&appostype=2&appversion=2.2.0&channel=appstore&id=%ld&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=cases&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
+
