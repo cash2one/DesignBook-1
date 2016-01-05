@@ -29,6 +29,10 @@
         self.dataSource=self;
         self.delegate=self;
         self.separatorStyle=UITableViewCellSeparatorStyleNone;
+        
+        self.mj_header=[MJRefreshNormalHeader headerWithRefreshingBlock:^{
+            [self.mainViewDelegate refreshWithMainView:self andRefreshComponent:self.mj_header];
+        }];
     }
     return self;
 }
@@ -136,6 +140,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     UIButton * btn=[UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0, 0, WIDTH, 44);
+    btn.titleLabel.font=[UIFont systemFontOfSize:14];
     [btn setTitle:@"查看全部设计案例" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(seeAllCases) forControlEvents:UIControlEventTouchUpInside];
@@ -154,18 +159,9 @@
     return 300;
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    static CGFloat oldY;
-    if(oldY>scrollView.contentOffset.y){
-        [self.mainViewDelegate caseMainView:self andScrollViewIsUp:NO];
-    }else if(oldY < scrollView.contentOffset.y){
-        [self.mainViewDelegate caseMainView:self andScrollViewIsUp:YES];
-    }
-    oldY=scrollView.contentOffset.y;
-}
-
 #pragma mark - 传递数据
 - (void)setCasesArray:(NSMutableArray *)casesArray{
+    [self.mj_header endRefreshing];
     _casesArray=casesArray;
     [self reloadData];
 }

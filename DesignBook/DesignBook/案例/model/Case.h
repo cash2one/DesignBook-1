@@ -40,4 +40,6 @@
 
 + (instancetype)caseWithDict:(NSDictionary *)dict;
 
+- (BOOL)saveSelf;
+
 @end

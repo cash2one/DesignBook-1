@@ -80,6 +80,7 @@
 
 - (void)loadWebProgressView{
     CustomWebProgressView * pv=[CustomWebProgressView progressViewAndFrame:CGRectMake(0, 64, WIDTH, 2) andWebView:self.webView];
+    pv.backgroundColor=[UIColor redColor];
     [self.view addSubview:pv];
     self.webProgressView=pv;
 }

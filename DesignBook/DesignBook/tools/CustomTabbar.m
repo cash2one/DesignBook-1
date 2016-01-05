@@ -27,7 +27,7 @@
         UIImageView * bgImageView=[[UIImageView alloc]initWithFrame:self.bounds];
         _backgroundImageView=bgImageView;
         [self addSubview:bgImageView];
-//        self.backgroundColor=[UIColor whiteColor];
+        self.backgroundColor=[UIColor whiteColor];
         self.itemArray=itemArray;
     }
     return self;
@@ -50,6 +50,7 @@
         CGFloat btnY=0;
         
         UIButton * btn=[UIButton buttonWithType:UIButtonTypeCustom];
+        btn.backgroundColor=[UIColor whiteColor];
         btn.tag=i;
         btn.frame=CGRectMake(btnX,btnY,btnW,btnH);
         
@@ -104,7 +105,7 @@
         }
         i++;
     }//for end
-    [self autolayoutMyTabbar];
+//    [self autolayoutMyTabbar];
 }
 #pragma mark- 设置点击item项的颜色
 - (void)setNormalColor:(UIColor *)normalColor{

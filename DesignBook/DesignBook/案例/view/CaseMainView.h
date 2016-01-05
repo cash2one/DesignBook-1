@@ -22,8 +22,6 @@
 
 - (void)refreshWithMainView:(CaseMainView *)mainView andRefreshComponent:(MJRefreshComponent *)baseView;
 
-- (void)caseMainView:(CaseMainView *)mainView andScrollViewIsUp:(BOOL)isUp;
-
 - (void)guidePageViewTouchWithIndex:(NSInteger)index;
 
 - (void)scrollViewTouchWithIndex:(NSInteger)index;

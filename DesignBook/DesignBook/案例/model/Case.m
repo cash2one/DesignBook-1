@@ -8,6 +8,8 @@
 
 #import "Case.h"
 #import "NSObject+KVC.h"
+#import "SQLiteManager.h"
+#import "NSString+NilToNULL.h"
 
 @implementation Case
 
@@ -26,6 +28,10 @@
         }
     }
     return cases;
+}
+
+- (BOOL)saveSelf{
+    return [[SQLiteManager shareSQLiteManager]insertWithSQL:@"INSERT INTO `Cases`(`id`,`uid`,`counts`,`hits`,`name`,`nick`,`facePic`,`imgUrl`,`styleName`,`priceName`,`areaName`,`spaceName`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);" andArgumentsInArray:@[@(self.id),@(self.uid),@(self.counts),@(self.hits),[NSString nilToNull:self.name],[NSString nilToNull:self.nick],[NSString nilToNull:self.facePic],[NSString nilToNull:self.imgUrl],[NSString nilToNull:self.styleName],[NSString nilToNull:self.priceName],[NSString nilToNull:self.areaName],[NSString nilToNull:self.spaceName]]];
 }
 
 @end

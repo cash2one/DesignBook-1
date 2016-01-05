@@ -10,5 +10,7 @@
 
 @implementation SQLStatementConst
 
-NSString *const INSERT_THIRD_LOGIN=@"";
+
+
+
 @end

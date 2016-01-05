@@ -23,3 +23,14 @@
 
 #define CASE_DETAIL_URL (SERVER_URL@"action=detail&appid=30&appostype=2&appversion=2.2.0&channel=appstore&id=%ld&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=cases&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
 
+#define CASE_ALL_HOME_URL (SERVER_URL@"action=home&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=cases&page=%ld&price=0&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&style=%@&type=%@&area=%@&uid=0&version=2.2")
+
+#define CASE_ALL_PUBLIC_URL (SERVER_URL@"action=public&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=cases&page=%ld&price=0&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&type=%@&area=%@&uid=0&version=2.2")
+
+#define QUEANDANS_ACTIVE_URL (SERVER_URL@"action=index&appid=30&appostype=2&appversion=2.2.0&askType=%@&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=ask&page=%ld&pageSize=15&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
+#define QUEANDANS_DETAIL_URL (SERVER_URL@"action=detail&appid=30&appostype=2&appversion=2.2.0&channel=appstore&id=%ld&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=ask&page=%ld&pageSize=20&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
+
+
+#define PIC_HOME_LIST_URL (SERVER_URL@"action=list&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&kind=home&module=works&page=%ld&space=%@&style=%@&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
+
+#define PIC_PUBLIC_LIST_URL (SERVER_URL@"action=list&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&kind=public&module=works&page=%ld&space=%@&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")

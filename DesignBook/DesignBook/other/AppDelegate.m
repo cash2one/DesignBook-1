@@ -41,13 +41,16 @@
     
     
     CustomTabbar * tabbar=[CustomTabbar tabbarWithTabbarItemArray:itemArray andTabbarController:tbc];
+    UIView * view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 1)];
+    view.backgroundColor=[UIColor grayColor];
+    [tabbar addSubview:view];
+    
     [tbc.view addSubview:tabbar];
-    [tabbar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.equalTo(@0);
-        make.height.equalTo(@49);
-    }];
+    tabbar.frame=CGRectMake(0, HEIGHT-49, WIDTH, 49);
+    [tbc.view bringSubviewToFront:tabbar];
     self.myTabbar=tabbar;
-    tabbar.currentIndex=0;
+    tabbar.currentIndex=3;
+    
 }
 
 
@@ -57,6 +60,8 @@
 
 #pragma mark - 系统代理方法
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [SQLiteManager checkAndUpdateDatabaseVersion];
+    
     self.window =[[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     [self.window makeKeyAndVisible];
     

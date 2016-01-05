@@ -14,14 +14,13 @@
 
 
 @property(nonatomic,assign)NSInteger Id;
+@property(nonatomic,assign)NSInteger hits;
+@property(nonatomic,assign)NSInteger needLogin;
+
 @property(nonatomic,copy)NSString * title;
 @property(nonatomic,copy)NSString * imgUrl;
-@property(nonatomic,assign)NSInteger needLogin;
 @property(nonatomic,copy)NSString * url;
 @property(nonatomic,copy)NSString * module;
-
-
-@property(nonatomic,assign)NSInteger hits;
 @property(nonatomic,copy)NSString * name;
 @property(nonatomic,copy)NSString * comment;
 @property(nonatomic,copy)NSString * shareUrl;
@@ -32,5 +31,7 @@
 
 
 + (instancetype)bannerWithDict:(NSDictionary *)dict;
+
+- (BOOL)saveSelf;
 
 @end

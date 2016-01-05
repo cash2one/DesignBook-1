@@ -27,16 +27,24 @@ extern NSString *const VERSION_1_0;
  */
 extern NSString *const VERSION_SQL_1_0_1;
 /**
- *  创建subject表
+ *  插入数据库版本信息
  */
 extern NSString *const VERSION_SQL_1_0_2;
 /**
- *  插入一条版本信息
+ *  创建case表
  */
 extern NSString *const VERSION_SQL_1_0_3;
 /**
- *  创建third_login表，保存第三方库信息
+ *  创建parsing表
  */
 extern NSString *const VERSION_SQL_1_0_4;
+/**
+ *  创建banner表
+ */
+extern NSString *const VERSION_SQL_1_0_5;
+/**
+ *  创建banner表
+ */
+extern NSString *const VERSION_SQL_1_0_6;
 
 @end

@@ -84,8 +84,8 @@
     UIPageControl * pageCon=[[UIPageControl alloc]init];
     pageCon.numberOfPages=imagesArray.count;
     pageCon.frame=CGRectMake(width*0.5, height-25, 0, 0);
-    pageCon.currentPageIndicatorTintColor=[UIColor orangeColor];
-    pageCon.pageIndicatorTintColor=[UIColor purpleColor];
+    pageCon.currentPageIndicatorTintColor=[UIColor whiteColor];
+    pageCon.pageIndicatorTintColor=[UIColor grayColor];
     
     [self addSubview:pageCon];
     self.pageCon=pageCon;

@@ -16,7 +16,9 @@
 @property(nonatomic,assign)CGFloat headerHeight;
 @property(nonatomic,assign)CGFloat commentHeight;
 
+@property(nonatomic,weak)UIImageView * headerImageView;
 
+@property(nonatomic,weak)UIImageView * memberImageView;
 @end
 
 @implementation CaseScrollMainView
@@ -34,13 +36,14 @@
 - (void)setheaderView{
     UIView * view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, self.headerHeight)];
     UIImageView * headerImageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 200)];
+    self.headerImageView=headerImageView;
     [headerImageView sd_setImageWithURL:[NSURL URLWithString:self.banner.imgUrl] placeholderImage:[UIImage imageNamed:@"default_logo"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         self.shareImage=image;
     }];
     [view addSubview:headerImageView];
-//    self.headerImageView=headerImageView;
     
     UIImageView *memberImageView=[[UIImageView alloc]initWithFrame:CGRectMake(WIDTH*0.5-25, 200-25, 50, 50)];
+    self.memberImageView=memberImageView;
     memberImageView.layer.masksToBounds=YES;
     memberImageView.layer.cornerRadius=memberImageView.width*0.5;
     memberImageView.layer.borderColor = [[UIColor whiteColor] CGColor];
@@ -91,6 +94,28 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.1;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    CGFloat y=scrollView.contentOffset.y;
+    if(y<0){
+        self.headerImageView.y=y;
+        //随着y变大高度变大
+        self.headerImageView.height=200-y;
+        self.headerImageView.width=WIDTH-2*y;
+        self.headerImageView.x=y;
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    CGFloat y=scrollView.contentOffset.y;
+    if(y<0){
+        self.headerImageView.y=y;
+        //随着y变大高度变大
+        self.headerImageView.height=200-y;
+        self.headerImageView.width=WIDTH-2*y;
+        self.headerImageView.x=y;
+    }
 }
 
 #pragma mark - 设置数据源

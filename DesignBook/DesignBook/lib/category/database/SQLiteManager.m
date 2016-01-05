@@ -89,7 +89,15 @@ static SQLiteManager * manager;
  */
 - (BOOL)DMLSQL:(NSString *)sql andArgumentsInArray:(NSArray *)array{
     [self openDatabase];
-    BOOL b=[self.db executeUpdate:sql withArgumentsInArray:array];
+    NSMutableArray * tmpArray=[NSMutableArray arrayWithArray:array];
+    for(int i=0;i<tmpArray.count;i++){
+        NSString * str=tmpArray[i];
+        if([[NSString class] isSubclassOfClass:[str class]] && str.length==0){
+            tmpArray[i]=@"NULL";
+        }
+    }
+    
+    BOOL b=[self.db executeUpdate:sql withArgumentsInArray:tmpArray];
     [self closeDatabase];
     return b;
 }
@@ -154,6 +162,94 @@ static SQLiteManager * manager;
     return dataArray;
 }
 
++ (BOOL)deleteWithTableName:(NSString *)tableName andClass:(Class)clazz andParams:(NSDictionary *)params{
+    NSString * sql;
+    if(params&&params.allKeys){
+        sql=[NSString stringWithFormat:@"delete from %@ where %@;",tableName?tableName:NSStringFromClass(clazz),[self sqlWithDict:params]];
+        return [[self shareSQLiteManager]deleteWithSQL:sql andArgumentsInArray:[self valuesWithDict:params]];
+    }else{
+        sql=[NSString stringWithFormat:@"delete from %@;",tableName?tableName:NSStringFromClass(clazz)];
+        return [[self shareSQLiteManager]deleteWithSQL:sql andArgumentsInArray:nil];
+    }
+}
+
++ (BOOL)updateWithTableName:(NSString *)tableName andClass:(Class)clazz andParams:(NSDictionary *)params andWhereParams:(NSDictionary *)whereParams{
+    NSString * sql;
+    if(params&&params.allKeys){
+        if(whereParams&&whereParams.allKeys){
+            sql=[NSString stringWithFormat:@"update %@ set %@ where %@;",tableName?tableName:NSStringFromClass(clazz),[self setSqlWithDict:params],[self sqlWithDict:whereParams]];
+            NSArray * paramArray=[self valuesWithDict:params];
+            NSArray * tmpArray = [paramArray arrayByAddingObjectsFromArray:[self valuesWithDict:whereParams]];
+            
+            return [[self shareSQLiteManager]updateWithSQL:sql andArgumentsInArray:tmpArray];
+        }else{
+            sql=[NSString stringWithFormat:@"update %@ set %@;",tableName?tableName:NSStringFromClass(clazz),[self setSqlWithDict:params]];
+            return [[self shareSQLiteManager]updateWithSQL:sql andArgumentsInArray:[self valuesWithDict:params]];
+        }
+    }else{
+        return true;
+    }
+}
+/**
+ *  根据字典参数拼接出key1=? , key2=?
+ *
+ *  @param dict
+ *
+ *  @return key1=? and key2=?
+ */
++ (NSString *)setSqlWithDict:(NSDictionary *)dict{
+    NSMutableString * str=[[NSMutableString alloc]init];
+    
+    BOOL b=false;
+    for (NSString * key in dict.allKeys) {
+        if(!b){
+            b=true;
+            [str appendFormat:@" %@=? ",key];
+        }else{
+            [str appendFormat:@" , %@=? ",key];
+        }
+    }
+    return str;
+}
+
+/**
+ *  根据字典参数拼接出key1=? and key2=?
+ *
+ *  @param dict
+ *
+ *  @return key1=? and key2=?
+ */
++ (NSString *)sqlWithDict:(NSDictionary *)dict{
+    NSMutableString * str=[[NSMutableString alloc]init];
+    
+    BOOL b=false;
+    for (NSString * key in dict.allKeys) {
+        if(!b){
+            b=true;
+            [str appendFormat:@" %@=? ",key];
+        }else{
+            [str appendFormat:@" and %@=? ",key];
+        }
+    }
+    return str;
+}
+
+/**
+ *  返回所有的value值数组
+ *
+ *  @param dict
+ *
+ *  @return
+ */
++ (NSArray *)valuesWithDict:(NSDictionary *)dict{
+    NSMutableArray * values=[[NSMutableArray alloc]init];
+    
+    for (NSString * key in dict.allKeys) {
+        [values addObject:dict[key]];
+    }
+    return values;
+}
+
 + (NSArray *)propertyArrayWithClass:(Class)clazz{
     NSMutableArray * array=[[NSMutableArray alloc]init];
     unsigned int count;
@@ -208,12 +304,14 @@ static SQLiteManager * manager;
 -(void)updateDatabase{
     if([self.databaseVersion isEqualToString:VERSION_0]){
         [self createTableWithSQL:VERSION_SQL_1_0_1];
-        [self createTableWithSQL:VERSION_SQL_1_0_2];
+        [self insertWithSQL:VERSION_SQL_1_0_2 andArgumentsInArray:nil];
+        [self createTableWithSQL:VERSION_SQL_1_0_3];
         [self createTableWithSQL:VERSION_SQL_1_0_4];
-        [self insertWithSQL:VERSION_SQL_1_0_3 andArgumentsInArray:nil];
+        [self createTableWithSQL:VERSION_SQL_1_0_5];
+        [self createTableWithSQL:VERSION_SQL_1_0_6];
         self.databaseVersion=VERSION_1_0;
     }else if ([self.databaseVersion isEqualToString:VERSION_1_0]){
-        NSLog(@"进行下一次升级的更新");
+//        NSLog(@"进行下一次升级的更新");
     }
 }
 /**

@@ -9,8 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface SQLStatementConst : NSObject
-/**
- *  查询所有的User表
- */
-extern NSString *const INSERT_THIRD_LOGIN;
+
 @end

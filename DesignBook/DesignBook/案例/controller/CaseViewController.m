@@ -8,20 +8,20 @@
 
 #import "CaseViewController.h"
 #import "CaseScrollViewController.h"
+#import "CaseDetailViewController.h"
+#import "CaseAllViewController.h"
 #import "CaseMainView.h"
 #import "Parsing.h"
 #import "Case.h"
 #import "Banner.h"
 
-@interface CaseViewController ()<RequestUtilDelegate,CaseMainViewDelegate,UIScrollViewDelegate>
+@interface CaseViewController ()<RequestUtilDelegate,CaseMainViewDelegate,UIScrollViewDelegate,UIGestureRecognizerDelegate>
 
 @property(nonatomic,strong)UIAlertView * alertView;
 
 @property(nonatomic,strong)RequestUtil * requestUtil;
 
 @property(nonatomic,weak)CaseMainView * mainView;
-
-@property(nonatomic,assign)BOOL isHiddenStateBar;
 
 @property(nonatomic,strong)NSMutableArray * jiexiArray;
 @property(nonatomic,strong)NSMutableArray * casesArray;
@@ -34,38 +34,83 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
-    
+    [UIApplication sharedApplication].statusBarStyle=UIStatusBarStyleLightContent;
     [self loadMainView];
     [self downloadData];
+    [self loadNavigationBar];
 }
 
+#pragma mark - 初始加载
 - (void)loadMainView{
     CaseMainView * mainView=[[CaseMainView alloc]initWithFrame:CGRectMake(0, 64, WIDTH, HEIGHT-64-49) style:UITableViewStyleGrouped];
     [self.view addSubview:mainView];
     mainView.mainViewDelegate=self;
     self.mainView=mainView;
+    UISwipeGestureRecognizer * sgr1=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(sgr:)];
+    sgr1.delegate=self;
+    sgr1.direction=UISwipeGestureRecognizerDirectionDown;
+    [mainView addGestureRecognizer:sgr1];
+    
+    UISwipeGestureRecognizer * sgr2=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(sgr:)];
+    sgr2.delegate=self;
+    sgr2.direction=UISwipeGestureRecognizerDirectionUp;
+    [mainView addGestureRecognizer:sgr2];
 }
 
 - (void)loadNavigationBar{
-    UIBarButtonItem * bbir=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"ico_case_search"] style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem * bbir=[[UIBarButtonItem alloc]initWithImage:[[UIImage imageNamed:@"ico_case_search"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:nil];
     self.navigationItem.rightBarButtonItem=bbir;
+    
+    UIImageView * imageView=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"AppIcon40x40"]];
+    imageView.frame = CGRectMake(8, 20, 44, 44);
+    UIBarButtonItem * bbil=[[UIBarButtonItem alloc]initWithCustomView:imageView];
+    self.navigationItem.leftBarButtonItem=bbil;
+    
 }
+
+
+
+- (void)sgr:(UISwipeGestureRecognizer *)sgr{
+    if(sgr.direction==UISwipeGestureRecognizerDirectionUp){
+        [UIView animateWithDuration:0.5 animations:^{
+            self.navigationController.navigationBarHidden=YES;
+            [AppDelegate getTabbar].hidden=YES;
+            self.mainView.y=0;
+            self.mainView.height=HEIGHT;
+        }];
+    }else if(sgr.direction==UISwipeGestureRecognizerDirectionDown){
+        [AppDelegate getTabbar].hidden=NO;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.navigationController.navigationBarHidden=NO;
+            self.mainView.y=64;
+            self.mainView.height=HEIGHT-64-49;
+        }];
+    }
+}
+
+
 
 #pragma mark - mainView代理
 - (void)itemSelectedWithMainView:(CaseMainView *)mainView andIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"选中一项%ld",indexPath.row);
+    CaseDetailViewController * con=[[CaseDetailViewController alloc]init];
+    [self.navigationController pushViewController:con animated:YES];
+    con.cases=self.casesArray[indexPath.row];
 }
 
 - (void)seeAllCasesWithMainView:(CaseMainView *)mainView{
-    NSLog(@"查看全部案例");
+    [self.navigationController pushViewController:[CaseAllViewController new] animated:YES];
 }
 
 - (void)refreshWithMainView:(CaseMainView *)mainView andRefreshComponent:(MJRefreshComponent *)baseView{
-    NSLog(@"刷新");
+    if(baseView==mainView.mj_header){
+        [SQLiteManager deleteWithTableName:@"cases" andClass:nil andParams:nil];
+        [SQLiteManager deleteWithTableName:nil andClass:[Parsing class] andParams:nil];
+        [SQLiteManager deleteWithTableName:nil andClass:[Banner class] andParams:nil];
+        [self downloadData];
+    }
 }
 
 - (void)guidePageViewTouchWithIndex:(NSInteger)index{
-    
     Banner * banner = self.bannerArray[index];
     if(banner.Id==0){
         WebViewController * con=[[WebViewController alloc]init];
@@ -87,28 +132,20 @@
     con.Id=parsing.Id;
 }
 
-- (void)caseMainView:(CaseMainView *)mainView andScrollViewIsUp:(BOOL)isUp{
-    if(isUp && !self.isHiddenStateBar && self.mainView.contentOffset.y>0){
-        self.isHiddenStateBar=YES;
-        [UIView animateWithDuration:0.5 animations:^{
-            self.navigationController.navigationBarHidden=YES;
-            [AppDelegate getTabbar].hidden=YES;
-            self.mainView.y=0;
-            self.mainView.height=HEIGHT;
-        }];
-    }else if(!isUp && self.isHiddenStateBar && self.mainView.contentOffset.y>0){
-        self.isHiddenStateBar=NO;
-        [UIView animateWithDuration:0.5 animations:^{
-            self.navigationController.navigationBarHidden=NO;
-            [AppDelegate getTabbar].hidden=NO;
-            self.mainView.y=64;
-            self.mainView.height=HEIGHT-64-49;
-        }];
-    }
-}
-
 #pragma mark - 下载数据
 - (void)downloadData{
+    NSArray * caseArray = [SQLiteManager queryAllWithTableName:@"cases" andClass:[Case class]];
+    NSArray * parsingArray = [SQLiteManager queryAllWithTableName:nil andClass:[Parsing class]];
+    NSArray * bannerArray = [SQLiteManager queryAllWithTableName:nil andClass:[Banner class]];
+    if(parsingArray.count&&bannerArray.count){
+        self.casesArray=(NSMutableArray *)caseArray;
+        self.jiexiArray=(NSMutableArray *)parsingArray;
+        self.bannerArray=(NSMutableArray *)bannerArray;
+        self.mainView.jiexiArray=self.jiexiArray;
+        self.mainView.bannerArray=self.bannerArray;
+        self.mainView.casesArray=self.casesArray;
+        return;
+    }
     
     //先从数据库取
     [self.alertView show];
@@ -125,17 +162,23 @@
         //存储导数据库
         if(dataDict[@"jiexi"]){
             for (NSDictionary * dict in dataDict[@"jiexi"]) {
-                [self.jiexiArray addObject:[Parsing parsingWithDict:dict]];
+                Parsing * p=[Parsing parsingWithDict:dict];
+                [SQLiteManager insertToTableName:nil andObject:p];
+                [self.jiexiArray addObject:p];
             }
         }
         if(dataDict[@"cases"]){
             for (NSDictionary * dict in dataDict[@"cases"]) {
-                [self.casesArray addObject:[Case caseWithDict:dict]];
+                Case * cases =[Case caseWithDict:dict];
+                [cases saveSelf];
+                [self.casesArray addObject:cases];
             }
         }
         if(dataDict[@"banner"]){
             for (NSDictionary * dict in dataDict[@"banner"]) {
-                [self.bannerArray addObject:[Banner bannerWithDict:dict]];
+                Banner * b =[Banner bannerWithDict:dict];
+                [b saveSelf];
+                [self.bannerArray addObject:b];
             }
         }
         self.mainView.jiexiArray=self.jiexiArray;
@@ -191,12 +234,15 @@
 
 #pragma mark - 系统协议方法
 -(void)viewWillAppear:(BOOL)animated{
-    self.navigationController.navigationBar.barTintColor=[UIColor colorWithRed:0.87f green:0.19f blue:0.19f alpha:1.00f];
+    self.navigationController.navigationBar.barTintColor=[UIColor colorWithRed:0.87f green:0.23f blue:0.20f alpha:1.00f];
     [AppDelegate getTabbar].hidden=NO;
+    [UIApplication sharedApplication].statusBarStyle=UIStatusBarStyleLightContent;
 }
-
-- (BOOL)prefersStatusBarHidden{
-    return self.isHiddenStateBar;
+#pragma mark - 手势协议方法
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    if ([otherGestureRecognizer.view isKindOfClass:[UITableView class]]) {
+        return YES;
+    }
+    return NO;
 }
-
 @end

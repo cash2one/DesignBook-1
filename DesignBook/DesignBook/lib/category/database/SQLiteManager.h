@@ -80,4 +80,8 @@
 
 + (NSArray *)queryAllWithTableName:(NSString *)tableName andClass:(Class)clazz;
 
++ (BOOL)deleteWithTableName:(NSString *)tableName andClass:(Class)clazz andParams:(NSDictionary *)params;
+
++ (BOOL)updateWithTableName:(NSString *)tableName andClass:(Class)clazz andParams:(NSDictionary *)params andWhereParams:(NSDictionary *)whereParams;
+
 @end
