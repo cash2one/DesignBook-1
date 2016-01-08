@@ -6,27 +6,41 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CaseScrollMainCell" id="YaW-UV-cEQ" customClass="CaseScrollMainCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CaseScrollMainCell" rowHeight="99" id="YaW-UV-cEQ" customClass="CaseScrollMainCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="99"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YaW-UV-cEQ" id="fTG-Ox-0J3">
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Iol-Dv-Ubl">
-                        <rect key="frame" x="8" y="5" width="304" height="33"/>
+                        <rect key="frame" x="8" y="5" width="304" height="60"/>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hrq-kj-FG9">
+                        <rect key="frame" x="8" y="73" width="304" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="17" id="IKA-K5-9OA"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Iol-Dv-Ubl" secondAttribute="trailing" constant="8" id="2aR-Bs-zbu"/>
-                    <constraint firstAttribute="bottom" secondItem="Iol-Dv-Ubl" secondAttribute="bottom" constant="5" id="A4p-N1-1HY"/>
+                    <constraint firstAttribute="trailing" secondItem="hrq-kj-FG9" secondAttribute="trailing" constant="8" id="2oa-Zn-RgZ"/>
+                    <constraint firstItem="hrq-kj-FG9" firstAttribute="leading" secondItem="fTG-Ox-0J3" secondAttribute="leading" constant="8" id="CgG-pg-lvu"/>
+                    <constraint firstItem="hrq-kj-FG9" firstAttribute="top" secondItem="Iol-Dv-Ubl" secondAttribute="bottom" constant="8" id="Gs3-Dt-Vl1"/>
                     <constraint firstItem="Iol-Dv-Ubl" firstAttribute="leading" secondItem="fTG-Ox-0J3" secondAttribute="leading" constant="8" id="Jg8-ak-FoH"/>
+                    <constraint firstAttribute="bottom" secondItem="hrq-kj-FG9" secondAttribute="bottom" constant="8" id="O8Q-pK-lNQ"/>
                     <constraint firstItem="Iol-Dv-Ubl" firstAttribute="top" secondItem="fTG-Ox-0J3" secondAttribute="top" constant="5" id="bLv-VA-82S"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="commentHeightCons" destination="IKA-K5-9OA" id="vpx-Fg-Q1a"/>
+                <outlet property="commentLabel" destination="hrq-kj-FG9" id="LJ3-lz-4D2"/>
                 <outlet property="iconImageView" destination="Iol-Dv-Ubl" id="RVN-j0-VYg"/>
             </connections>
-            <point key="canvasLocation" x="215" y="272"/>
+            <point key="canvasLocation" x="215" y="298.5"/>
         </tableViewCell>
     </objects>
 </document>

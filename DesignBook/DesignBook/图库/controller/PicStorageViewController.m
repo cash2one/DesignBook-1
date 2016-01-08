@@ -7,11 +7,12 @@
 //
 
 #import "PicStorageViewController.h"
+#import "PictureDetailViewController.h"
 #import "UIButton+RefreshLocation.h"
 #import "CustomDropDownListView.h"
 #import "PicStorageMainView.h"
 #import "TFilterTypeList.h"
-#import "PictureInfo.h"
+#import "ImageInfo.h"
 
 
 @interface PicStorageViewController ()<RequestUtilDelegate,CustomDropDownListViewDelegate,PicStorageMainViewDelegate,UIGestureRecognizerDelegate>
@@ -139,7 +140,14 @@
 }
 
 - (void)itemSelectedWithMainView:(PicStorageMainView *)mainView andIndexPath:(NSIndexPath *)indexPath{
-    
+    PictureDetailViewController * con=[PictureDetailViewController new];
+    [self.navigationController pushViewController:con animated:YES];
+    if(self.isSelectedPublic){
+        con.dataArray=self.pubArray;
+    }else{
+        con.dataArray=self.homeArray;
+    }
+    con.indexPath=indexPath;
 }
 
 - (void)refreshWithMainView:(PicStorageMainView *)mainView andRefreshComponent:(MJRefreshComponent *)baseView{
@@ -242,7 +250,6 @@
     }
 }
 
-
 #pragma mark - 下载数据
 - (void)downloadData{
     [self.alertView show];
@@ -267,12 +274,12 @@
         NSArray * fashionUserArray = dict[@"data"];
         if(self.isSelectedPublic){
             for (NSDictionary * dict in fashionUserArray) {
-                [self.pubArray addObject:[PictureInfo pictureInfoWithDict:dict]];
+                [self.pubArray addObject:[ImageInfo imageInfoWithDict:dict]];
             }
             self.mainView.dataArray=self.pubArray;
         }else{
             for (NSDictionary * dict in fashionUserArray) {
-                PictureInfo * info =[PictureInfo pictureInfoWithDict:dict];
+                ImageInfo * info =[ImageInfo imageInfoWithDict:dict];
                 [self.homeArray addObject:info];
             }
             self.mainView.dataArray=self.homeArray;
@@ -366,5 +373,7 @@
 #pragma mark - 系统协议方法
 - (void)viewWillAppear:(BOOL)animated{
     [UIApplication sharedApplication].statusBarStyle=UIStatusBarStyleDefault;
+    self.navigationController.navigationBarHidden=NO;
+    [AppDelegate getTabbar].hidden=NO;
 }
 @end

@@ -7,9 +7,13 @@
 //
 
 #import "CaseScrollViewController.h"
+#import "NormalUserViewController.h"
+#import "PictureDetailViewController.h"
+#import "MemberViewController.h"
+#import "WebViewController.h"
 #import "CaseScrollMainView.h"
 
-@interface CaseScrollViewController ()<RequestUtilDelegate>
+@interface CaseScrollViewController ()<RequestUtilDelegate,CaseScrollMainViewDelegate>
 
 @property(nonatomic,strong)UIAlertView * alertView;
 
@@ -34,6 +38,7 @@
 #pragma mark - 初始化
 - (void)loadMainView{
     CaseScrollMainView * mainView=[[CaseScrollMainView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, HEIGHT-44) style:UITableViewStyleGrouped];
+    mainView.mainViewDelegate=self;
     self.mainView=mainView;
     [self.view addSubview:mainView];
     
@@ -70,7 +75,10 @@
 }
 
 - (void)applyCustomDesignBtnTouch:(UIButton *)btn{
-    NSLog(@"申请定制设计");
+    WebViewController * con=[WebViewController new];
+    [self.navigationController pushViewController:con animated:YES];
+    con.requestUrl=APPLY_CUSTOM_DESIGN_URL;
+    con.isHiddenShare=YES;
 }
 
 - (void)backToPreviousViewCon{
@@ -81,7 +89,24 @@
     [UMSocialSnsService presentSnsController:self appKey:KUMengKey shareText:self.banner.name shareImage:self.mainView.shareImage shareToSnsNames:@[UMShareToSina,UMShareToQQ,UMShareToWechatSession,UMShareToRenren] delegate:nil];
 }
 
+- (void)headerImageViewTouch{
+    if(self.banner.memberInfo.identity==0){
+        NormalUserViewController * con=[NormalUserViewController new];
+        [self.navigationController pushViewController:con animated:YES];
+        con.memberInfo=self.banner.memberInfo;
+    }else if (self.banner.memberInfo.identity==1){
+        MemberViewController * con=[MemberViewController new];
+        [self.navigationController pushViewController:con animated:YES];
+        con.memberInfo=self.banner.memberInfo;
+    }
+}
 
+- (void)itemSelectedWithMainView:(CaseScrollMainView *)mainView andIndexPath:(NSIndexPath *)indexPath{
+    PictureDetailViewController * con=[PictureDetailViewController new];
+    [self.navigationController pushViewController:con animated:YES];
+    con.dataArray=[NSMutableArray arrayWithArray:self.banner.imgList];
+    con.indexPath=indexPath;
+}
 
 #pragma mark - 下载数据
 - (void)downloadData{
@@ -129,6 +154,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBarHidden=YES;
     [AppDelegate getTabbar].hidden=YES;
+    [UIApplication sharedApplication].statusBarStyle=UIStatusBarStyleLightContent;
 }
 
 - (void)viewWillDisappear:(BOOL)animated{

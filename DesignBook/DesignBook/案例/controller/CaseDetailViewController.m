@@ -7,9 +7,12 @@
 //
 
 #import "CaseDetailViewController.h"
+#import "PictureDetailViewController.h"
+#import "MemberViewController.h"
+#import "WebViewController.h"
 #import "CaseDetailMainView.h"
 
-@interface CaseDetailViewController ()<RequestUtilDelegate>
+@interface CaseDetailViewController ()<RequestUtilDelegate,CaseDetailMainViewDelegate>
 
 @property(nonatomic,strong)UIAlertView * alertView;
 
@@ -31,6 +34,7 @@
 #pragma mark - 初始化
 - (void)loadMainView{
     CaseDetailMainView * mainView=[[CaseDetailMainView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, HEIGHT) style:UITableViewStyleGrouped];
+    mainView.mainViewDelegate=self;
     self.mainView=mainView;
     [self.view addSubview:mainView];
 }
@@ -57,7 +61,9 @@
 }
 
 - (void)applyCustomDesignBtnTouch:(UIButton *)btn{
-    NSLog(@"申请定制设计");
+    WebViewController * con=[WebViewController new];
+    [self.navigationController pushViewController:con animated:YES];
+    con.requestUrl=APPLY_CUSTOM_DESIGN_URL;
 }
 
 - (void)backToPreviousViewCon{
@@ -68,7 +74,21 @@
     [UMSocialSnsService presentSnsController:self appKey:KUMengKey shareText:self.cases.name shareImage:self.mainView.shareImage shareToSnsNames:@[UMShareToSina,UMShareToQQ,UMShareToWechatSession,UMShareToRenren] delegate:nil];
 }
 
+- (void)headerImageViewTouch{
+    MemberViewController * con=[MemberViewController new];
+    [self.navigationController pushViewController:con animated:YES];
+    MemberInfo * mem=[MemberInfo new];
+    mem.uid=self.cases.uid;
+    mem.facePic=self.cases.facePic;
+    con.memberInfo=mem;
+}
 
+- (void)itemSelectedWithMainView:(CaseDetailMainView *)mainView andIndexPath:(NSIndexPath *)indexPath{
+    PictureDetailViewController * con=[PictureDetailViewController new];
+    [self.navigationController pushViewController:con animated:YES];
+    con.dataArray=[NSMutableArray arrayWithArray:self.cases.imgList];
+    con.indexPath=indexPath;
+}
 
 #pragma mark - 下载数据
 - (void)downloadData{

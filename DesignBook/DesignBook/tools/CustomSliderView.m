@@ -21,6 +21,7 @@
 }
 - (instancetype)initWithItems:(NSArray *)items andFrame:(CGRect)frame{
     if(self=[super initWithFrame:frame]){
+        self.backgroundColor=[UIColor whiteColor];
         self.items=items;
         [self createHorizontalLine];
     }

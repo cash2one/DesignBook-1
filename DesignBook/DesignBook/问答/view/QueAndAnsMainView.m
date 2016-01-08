@@ -21,12 +21,12 @@
 
 @implementation QueAndAnsMainView
 
-- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style
-{
-    self = [super initWithFrame:frame style:style];
+- (instancetype)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
     if (self) {
         self.dataSource=self;
         self.delegate=self;
+        [self createTableHeaderView];
         self.rowHeight=90;
         
         self.mj_header= [MJRefreshNormalHeader headerWithRefreshingBlock:^{
@@ -39,6 +39,33 @@
         }];
     }
     return self;
+}
+
+- (void)createTableHeaderView{
+    
+    UIView * headerView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 200)];
+    
+    UIImageView * iv=[[UIImageView alloc]initWithImage:[[UIImage imageNamed:@"bg_qa"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    iv.frame=CGRectMake(0, 0, WIDTH, 200);
+    [headerView addSubview:iv];
+    
+    UIImageView * bgFontIV=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg_font"]];
+    bgFontIV.contentMode=UIViewContentModeScaleAspectFit;
+    bgFontIV.frame=CGRectMake(0, 64, WIDTH, 64);
+    [headerView addSubview:bgFontIV];
+    
+    UIButton * wangBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    wangBtn.backgroundColor=[UIColor colorWithRed:0.87f green:0.19f blue:0.19f alpha:1.00f];
+    [wangBtn setTitle:@"我要提问" forState:UIControlStateNormal];
+    [wangBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    wangBtn.titleLabel.font=[UIFont systemFontOfSize:13];
+    wangBtn.frame=CGRectMake((WIDTH-100)*0.5, 200-60, 100, 30);
+    wangBtn.layer.masksToBounds=YES;
+    wangBtn.layer.cornerRadius=3.f;
+    self.wangBtn=wangBtn;
+    [headerView addSubview:wangBtn];
+    
+    self.tableHeaderView=headerView;
 }
 
 #pragma mark - tableView的协议方法
@@ -62,47 +89,65 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 0.1;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.mainViewDelegate itemSelectedWithMainView:self andIndexPath:indexPath];
+}
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView * headerView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 244)];
-    
-    UIImageView * iv=[[UIImageView alloc]initWithImage:[[UIImage imageNamed:@"bg_qa"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    iv.frame=CGRectMake(0, 0, WIDTH, 200);
-    [headerView addSubview:iv];
-    
-    UIImageView * bgFontIV=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg_font"]];
-    bgFontIV.contentMode=UIViewContentModeScaleAspectFit;
-    bgFontIV.frame=CGRectMake(0, 64, WIDTH, 64);
-    [headerView addSubview:bgFontIV];
-    
-    UIButton * wangBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    wangBtn.backgroundColor=[UIColor colorWithRed:0.87f green:0.19f blue:0.19f alpha:1.00f];
-    [wangBtn setTitle:@"我要提问" forState:UIControlStateNormal];
-    [wangBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    wangBtn.titleLabel.font=[UIFont systemFontOfSize:13];
-    wangBtn.frame=CGRectMake((WIDTH-100)*0.5, 200-60, 100, 30);
-    wangBtn.layer.masksToBounds=YES;
-    wangBtn.layer.cornerRadius=3.f;
-    self.wangBtn=wangBtn;
-    [headerView addSubview:wangBtn];
-    
     
     CustomSliderView * sliderView=[CustomSliderView sliderViewWithItems:@[@"最近活跃",@"最新提问",@"等待回答"] andFrame:CGRectMake(0, 200, WIDTH, 44)];
     [sliderView setSelectedBtn:self.currentBtnIndex];
     sliderView.horiLine.backgroundColor=[UIColor colorWithRed:0.87f green:0.19f blue:0.19f alpha:1.00f];
     sliderView.selectedTitleColor=[UIColor colorWithRed:0.87f green:0.19f blue:0.19f alpha:1.00f];
     sliderView.delegate=self;
-    [wangBtn setTitle:@"我要提问" forState:UIControlStateNormal];
-    [headerView addSubview:sliderView];
-    
-    return headerView;
+    UIView * view=[[UIView alloc]initWithFrame:CGRectMake(0, sliderView.height-1, WIDTH, 1)];
+    view.backgroundColor=[UIColor lightGrayColor];
+    [sliderView addSubview:view];
+    [sliderView bringSubviewToFront:sliderView.horiLine];
+    return sliderView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 200+44;
+    return 44;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 0.1;
+- (void)refreshBtnTitle{
+    if(self.wangBtn.width<55){
+        [self.wangBtn setTitle:@"提问" forState:UIControlStateNormal];
+        self.wangBtn.hidden=YES;
+    }else if(self.wangBtn.width>=55&&self.wangBtn.width<=65){
+        [self.wangBtn setTitle:@"...提问" forState:UIControlStateNormal];
+        self.wangBtn.hidden=NO;
+    }else if(self.wangBtn.width>65&&self.wangBtn.width<=80){
+        [self.wangBtn setTitle:@"...要提问" forState:UIControlStateNormal];
+    }else if(self.wangBtn.width>80){
+        [self.wangBtn setTitle:@"我要提问" forState:UIControlStateNormal];
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    static CGFloat oldOffset;
+    CGFloat offset = scrollView.contentOffset.y;
+    if(offset<=0)return;
+    if(offset>=oldOffset){//上拉
+        if(offset<=112){
+            self.wangBtn.x=(WIDTH-100)*0.5+(((WIDTH-66)-(WIDTH-100)*0.5)*offset/112);
+            self.wangBtn.width=100-(100-50)*offset/112;
+        }
+    }else{//下滑
+        if(offset<=112){
+            self.wangBtn.x=(WIDTH-100)*0.5+(((WIDTH-66)-(WIDTH-100)*0.5)*offset/112);
+            self.wangBtn.width=100-(100-50)*offset/112;
+        }else if(offset<=112+28+64){
+            self.wangBtn.width=55;
+        }
+    }
+    [self refreshBtnTitle];
+    oldOffset=offset;
 }
 
 - (void)sliderView:(CustomSliderView *)sliderView andIndex:(NSInteger)index andBtnArray:(NSArray *)btnArray{
@@ -110,23 +155,6 @@
     self.currentBtnIndex=index;
     [self.mainViewDelegate sliderView:sliderView andIndex:index andBtnArray:btnArray];
 }
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self.mainViewDelegate itemSelectedWithMainView:self andIndexPath:indexPath];
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    CGFloat offset = scrollView.contentOffset.y;
-    if(offset>0){
-        if(self.wangBtn.x!=WIDTH-66){
-            self.wangBtn.x=self.wangBtn.x+1;
-        }
-        if(self.wangBtn.width!=50){
-            self.wangBtn.width=self.wangBtn.width-2;
-        }
-    }
-}
-
 #pragma mark - 设置数据源
 - (void)setDataArray:(NSArray *)dataArray{
     [self.mj_header endRefreshing];

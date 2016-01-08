@@ -314,6 +314,29 @@ static SQLiteManager * manager;
 //        NSLog(@"进行下一次升级的更新");
     }
 }
+
+/**
+ *  获取SDWebImage缓存大小
+ *
+ *  @return 缓存大小
+ */
++ (NSInteger)cacheSize{
+    NSDate * date=[NSDate date];
+    NSFileManager * fm=[NSFileManager defaultManager];
+    NSInteger fileSize=0;
+    NSString * path=[NSString stringWithFormat:SDWEBIMAGE_PATH,NSHomeDirectory()];
+    for (NSString * fileName in [fm subpathsAtPath:path]) {
+        NSError * error;
+        NSDictionary * dict=[fm attributesOfItemAtPath:[NSString stringWithFormat:@"%@/%@",path,fileName] error:&error];
+        
+        fileSize+=error?0:[dict fileSize];
+    }
+    
+    NSTimeInterval time=[date timeIntervalSinceNow];
+//    NSLog(@"size%f-->%f",fileSize*1.0/1024/1024,time);
+    return fileSize;
+}
+
 /**
  *  打开数据库
  *

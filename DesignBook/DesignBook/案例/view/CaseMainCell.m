@@ -14,7 +14,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 
-@property (weak, nonatomic) IBOutlet UIImageView *headerImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 // 140样板间 / 混搭 / 17图
 @property (weak, nonatomic) IBOutlet UILabel *areaStyleCountLabel;
@@ -40,7 +39,7 @@
     NSMutableString * str=[[NSMutableString alloc]init];
     
     if(cases.areaName.length){
-        [str appendFormat:@"%@ ",cases.areaName];
+        [str appendFormat:@"%@%@ ",cases.areaName,cases.spaceName];
     }
     
     if(cases.styleName.length){

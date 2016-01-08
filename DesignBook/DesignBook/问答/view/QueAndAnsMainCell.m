@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *createTimeBtn;
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewCons;
 
 @end
 
@@ -32,15 +33,9 @@
 - (void)setQueAndAns:(QueAndAns *)queAndAns{
     _queAndAns=queAndAns;
     if(queAndAns.imgUrl.length){
-        self.iconImageView.frame=CGRectMake(WIDTH-70-8, 10, 70, 70);
-        self.titleLabel.width=WIDTH-16-78;
-        self.readBtn.x=CGRectGetMinX(self.iconImageView.frame)-self.readBtn.width-8;
-        self.commentBtn.x=CGRectGetMinX(self.readBtn.frame)-8-self.commentBtn.width;
+        self.imageViewCons.constant=73;
     }else{
-        self.iconImageView.frame=CGRectZero;
-        self.titleLabel.width=WIDTH-16;
-        self.readBtn.x=WIDTH-self.readBtn.width-8;
-        self.commentBtn.x=CGRectGetMinX(self.readBtn.frame)-8-self.commentBtn.width;
+        self.imageViewCons.constant=0;
     }
     self.titleLabel.text=queAndAns.title;
     [self.createTimeBtn setTitle:queAndAns.createTime forState:UIControlStateNormal];

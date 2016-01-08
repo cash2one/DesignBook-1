@@ -10,10 +10,23 @@
 #import "QueAndAns.h"
 #import "Comment.h"
 
+@class QueAndAnsDetailMainView;
+
+@protocol QueAndAnsDetailMainViewDelegate <NSObject>
+- (void)praiseNumBtnTouchWithIndex:(NSInteger)index;
+
+- (void)headerImageViewBtnTouchWithIndex:(NSInteger)index;
+
+@end
+
 @interface QueAndAnsDetailMainView : UITableView
 
 @property(nonatomic,strong)QueAndAns * queAndAns;
 
 @property(nonatomic,strong)NSArray * commentArray;
+
+@property(nonatomic,weak)id<QueAndAnsDetailMainViewDelegate>mainViewDelegate;
+
+- (instancetype)initWithFrame:(CGRect)frame andQueAndAns:(QueAndAns *)queAndAns;
 
 @end

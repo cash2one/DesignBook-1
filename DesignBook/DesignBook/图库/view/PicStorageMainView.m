@@ -47,7 +47,7 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    PictureInfo * info=self.dataArray[indexPath.item];
+    ImageInfo * info=self.dataArray[indexPath.item];
     static NSString * identifier=@"PicStorageMainCell";
     
     UINib * nib=[UINib nibWithNibName:identifier bundle:nil];

@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class DiscoverMainView;
+
 @protocol DiscoverMainViewDelegate <NSObject>
 
 - (void)btnTouchAndIndex:(NSInteger)index;
+
+- (void)itemSelectedWithMainView:(DiscoverMainView *)mainView andIndexPath:(NSIndexPath *)indexPath;
 
 @end
 

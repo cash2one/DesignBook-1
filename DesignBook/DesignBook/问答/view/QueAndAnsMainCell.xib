@@ -13,17 +13,23 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xtz-t5-bWp">
-                        <rect key="frame" x="297" y="10" width="70" height="70"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xtz-t5-bWp">
+                        <rect key="frame" x="294" y="8" width="73" height="73"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="73" id="Xeq-DD-Euj"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i2z-U8-qgd">
-                        <rect key="frame" x="8" y="10" width="289" height="31"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i2z-U8-qgd">
+                        <rect key="frame" x="8" y="8" width="286" height="42"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gSx-8F-NS0">
-                        <rect key="frame" x="8" y="53" width="101" height="22"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gSx-8F-NS0">
+                        <rect key="frame" x="8" y="50" width="100" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="cCC-VO-jp2"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="-8" maxY="0.0"/>
                         <state key="normal" title="0" image="ico_qa_time.png">
@@ -31,8 +37,11 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wy0-hc-haG">
-                        <rect key="frame" x="239" y="54" width="50" height="22"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wy0-hc-haG">
+                        <rect key="frame" x="244" y="50" width="50" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="6kS-sZ-7wY"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="8" maxY="0.0"/>
                         <state key="normal" title="0" image="ico_qa_read.png">
@@ -40,8 +49,11 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kpz-Kj-JG5">
-                        <rect key="frame" x="181" y="53" width="50" height="22"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kpz-Kj-JG5">
+                        <rect key="frame" x="194" y="50" width="50" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="XVr-t4-0LE"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="8" maxY="0.0"/>
                         <state key="normal" title="0" image="ico_qa_comment.png">
@@ -50,20 +62,39 @@
                         </state>
                     </button>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="Xtz-t5-bWp" secondAttribute="trailing" constant="8" id="6Pr-NO-UEe"/>
+                    <constraint firstItem="kpz-Kj-JG5" firstAttribute="height" secondItem="gSx-8F-NS0" secondAttribute="height" id="BSs-Oo-nfu"/>
+                    <constraint firstItem="gSx-8F-NS0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="50" id="IEK-3k-tGd"/>
+                    <constraint firstAttribute="bottom" secondItem="Xtz-t5-bWp" secondAttribute="bottom" constant="8" id="Lkg-WW-oWa"/>
+                    <constraint firstItem="wy0-hc-haG" firstAttribute="leading" secondItem="kpz-Kj-JG5" secondAttribute="trailing" id="Qby-rf-Rhb"/>
+                    <constraint firstItem="Xtz-t5-bWp" firstAttribute="leading" secondItem="i2z-U8-qgd" secondAttribute="trailing" id="Ttx-RR-6zi"/>
+                    <constraint firstItem="Xtz-t5-bWp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="YvI-nq-M07"/>
+                    <constraint firstItem="gSx-8F-NS0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="aBU-Ko-ZrG"/>
+                    <constraint firstItem="kpz-Kj-JG5" firstAttribute="height" secondItem="wy0-hc-haG" secondAttribute="height" id="aiY-ng-F1q"/>
+                    <constraint firstItem="kpz-Kj-JG5" firstAttribute="top" secondItem="wy0-hc-haG" secondAttribute="top" id="bpo-42-9m8"/>
+                    <constraint firstItem="kpz-Kj-JG5" firstAttribute="top" secondItem="gSx-8F-NS0" secondAttribute="top" id="dNQ-zO-qlo"/>
+                    <constraint firstAttribute="bottom" secondItem="gSx-8F-NS0" secondAttribute="bottom" constant="14" id="npe-pz-6vD"/>
+                    <constraint firstItem="kpz-Kj-JG5" firstAttribute="top" secondItem="i2z-U8-qgd" secondAttribute="bottom" id="oad-8O-oPo"/>
+                    <constraint firstItem="Xtz-t5-bWp" firstAttribute="leading" secondItem="wy0-hc-haG" secondAttribute="trailing" id="qAI-dF-ofY"/>
+                    <constraint firstItem="i2z-U8-qgd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="tWv-UQ-Q0C"/>
+                    <constraint firstItem="i2z-U8-qgd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="vtv-k2-UPN"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="commentBtn" destination="kpz-Kj-JG5" id="gtc-wO-B2b"/>
                 <outlet property="createTimeBtn" destination="gSx-8F-NS0" id="gyj-JR-3lv"/>
                 <outlet property="iconImageView" destination="Xtz-t5-bWp" id="uDF-fQ-eFD"/>
+                <outlet property="imageViewCons" destination="Xeq-DD-Euj" id="xmX-El-CdD"/>
                 <outlet property="readBtn" destination="wy0-hc-haG" id="4Ys-cE-T9y"/>
                 <outlet property="titleLabel" destination="i2z-U8-qgd" id="n3c-cP-kQR"/>
             </connections>
-            <point key="canvasLocation" x="217.5" y="176"/>
+            <point key="canvasLocation" x="217.5" y="175"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="ico_qa_comment.png" width="16" height="16"/>
         <image name="ico_qa_read.png" width="18" height="16"/>
-        <image name="ico_qa_time.png" width="16" height="16"/>
+        <image name="ico_qa_time.png" width="34" height="14"/>
     </resources>
 </document>

@@ -11,7 +11,7 @@
 #import "QueAndAnsMainView.h"
 #import "QueAndAns.h"
 
-@interface QueAndAnsViewController ()<RequestUtilDelegate,QueAndAnsMainViewDelegate>
+@interface QueAndAnsViewController ()<RequestUtilDelegate,QueAndAnsMainViewDelegate,UIGestureRecognizerDelegate>
 
 @property(nonatomic,strong)UIAlertView * alertView;
 
@@ -31,6 +31,10 @@
 
 @property(nonatomic,assign)NSInteger currentIndex;
 
+@property(nonatomic,weak) UIView * navView;
+
+@property(nonatomic,assign)UISwipeGestureRecognizerDirection direction;
+
 @end
 
 @implementation QueAndAnsViewController
@@ -44,15 +48,94 @@
 }
 #pragma mark - 初始加载
 - (void)loadMainView{
-    QueAndAnsMainView * mainView=[[QueAndAnsMainView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, HEIGHT-49) style:UITableViewStyleGrouped];
+    QueAndAnsMainView * mainView=[[QueAndAnsMainView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, HEIGHT-49)];
     mainView.mainViewDelegate=self;
     [self.view addSubview:mainView];
     self.mainView=mainView;
+//    UISwipeGestureRecognizer * sgr1=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(mainViewSgr:)];
+//    sgr1.delegate=self;
+//    sgr1.direction=UISwipeGestureRecognizerDirectionDown;
+//    
+//    [mainView addGestureRecognizer:sgr1];
+//    
+//    UISwipeGestureRecognizer * sgr2=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(mainViewSgr:)];
+//    sgr2.delegate=self;
+//    sgr2.direction=UISwipeGestureRecognizerDirectionUp;
+//    
+//    [mainView addGestureRecognizer:sgr2];
+    UIPanGestureRecognizer * pgr=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(mainViewPgr:)];
+    pgr.delegate=self;
+    [mainView addGestureRecognizer:pgr];
+}
 
+- (void)mainViewSgr:(UISwipeGestureRecognizer *)sgr{
+    self.direction=sgr.direction;
+}
+
+- (void)mainViewPgr:(UIPanGestureRecognizer *)pgr{
+    static CGPoint oldPoint;
+    static CGPoint changePoint;
+    if (pgr.state==UIGestureRecognizerStateChanged){
+        changePoint=[pgr translationInView:pgr.view];
+        if(changePoint.y>oldPoint.y){
+            self.direction=UISwipeGestureRecognizerDirectionDown;
+        }else{
+            self.direction=UISwipeGestureRecognizerDirectionUp;
+        }
+        oldPoint=changePoint;
+    }else if (pgr.state==UIGestureRecognizerStateEnded) {
+        oldPoint=CGPointZero;
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    CGPoint newPoint = [change[@"new"] CGPointValue];
+    CGPoint oldPoint = [change[@"old"] CGPointValue];
+    if(newPoint.y>90 && newPoint.y<102 && self.direction==UISwipeGestureRecognizerDirectionUp){
+        self.navView.hidden=NO;
+        [UIApplication sharedApplication].statusBarStyle=UIStatusBarStyleDefault;
+        self.mainView.frame=CGRectMake(0, 64, WIDTH, HEIGHT-64-49);
+        if(newPoint.y==oldPoint.y){
+            newPoint.y+=64;
+            self.mainView.contentOffset=newPoint;
+        }
+    }else if(newPoint.y>173 && newPoint.y<180 &&  self.direction==UISwipeGestureRecognizerDirectionDown){
+        self.navView.hidden=YES;
+        [UIApplication sharedApplication].statusBarStyle=UIStatusBarStyleLightContent;
+        self.mainView.frame=CGRectMake(0, 0, WIDTH, HEIGHT-49);
+        if(newPoint.y==oldPoint.y){
+            newPoint.y-=64;
+            self.mainView.contentOffset=newPoint;
+        }
+    }
 }
 
 - (void)loadNavigationBar{
-    self.navigationItem.title=@"问答";
+    
+    UIView * view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 64)];
+    view.backgroundColor=[UIColor whiteColor];
+    view.hidden=YES;
+    view.layer.borderWidth=1.f;
+    view.layer.borderColor=[[UIColor lightGrayColor] CGColor];
+    
+    UILabel * label=[[UILabel alloc]initWithFrame:CGRectMake(0, 20, WIDTH, 44)];
+    label.text=@"问答";
+    label.textColor=[UIColor blackColor];
+    label.font=[UIFont systemFontOfSize:20];
+    label.textAlignment=NSTextAlignmentCenter;
+    [view addSubview:label];
+    
+    UIButton * wangBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    wangBtn.backgroundColor=[UIColor colorWithRed:0.87f green:0.19f blue:0.19f alpha:1.00f];
+    [wangBtn setTitle:@"提问" forState:UIControlStateNormal];
+    [wangBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    wangBtn.titleLabel.font=[UIFont systemFontOfSize:13];
+    wangBtn.frame=CGRectMake(WIDTH-66, 28, 50, 28);
+    wangBtn.layer.masksToBounds=YES;
+    wangBtn.layer.cornerRadius=3.f;
+    [view addSubview:wangBtn];
+    [self.view addSubview:view];
+    self.navView=view;
 }
 
 - (void)refreshWithMainView:(QueAndAnsMainView *)mainView andRefreshComponent:(MJRefreshComponent *)baseView{
@@ -69,6 +152,9 @@
 }
 
 - (void)sliderView:(id)sliderView andIndex:(NSInteger)index andBtnArray:(NSArray *)btnArray{
+    self.navView.hidden=YES;
+    self.mainView.frame=CGRectMake(0, 0, WIDTH, HEIGHT-49);
+    self.mainView.contentOffset=CGPointMake(0, 0);
     self.currentIndex=index;
     if([self.dataArray[index] count]){
         self.mainView.dataArray=self.dataArray[index];
@@ -162,5 +248,27 @@
     [UIApplication sharedApplication].statusBarStyle=UIStatusBarStyleLightContent;
     self.navigationController.navigationBarHidden=YES;
     [AppDelegate getTabbar].hidden=NO;
+}
+#pragma mark - 手势协议方法
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    if ([otherGestureRecognizer.view isKindOfClass:[QueAndAnsMainView class]]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    if ([gestureRecognizer.view isKindOfClass:[QueAndAnsMainView class]]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [self.mainView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [self.mainView removeObserver:self forKeyPath:@"contentOffset" context:nil];
 }
 @end

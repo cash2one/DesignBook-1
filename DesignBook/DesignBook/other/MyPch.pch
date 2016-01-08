@@ -12,25 +12,42 @@
 
 #define KUMengKey @"566e181067e58ef04c003342"
 
-#define SERVER_URL @"http://www.shejiben.com/mobile/index.php?"
+#define SERVER_URL @"http://www.shejiben.com/mobile/index.php"
 
 #define DEVICE_INFO @""
 
-#define CASE_LIST_URL (SERVER_URL@"action=index&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=cases&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
+#define CASE_LIST_URL (SERVER_URL@"?action=index&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=cases&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
 
 
-#define CASE_SCROLLVIEW_URL (SERVER_URL@"action=jiexiDetail&appid=30&appostype=2&appversion=2.2.0&channel=appstore&id=%ld&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=cases&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
+#define CASE_SCROLLVIEW_URL (SERVER_URL@"?action=jiexiDetail&appid=30&appostype=2&appversion=2.2.0&channel=appstore&id=%ld&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=cases&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
 
-#define CASE_DETAIL_URL (SERVER_URL@"action=detail&appid=30&appostype=2&appversion=2.2.0&channel=appstore&id=%ld&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=cases&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
+#define CASE_DETAIL_URL (SERVER_URL@"?action=detail&appid=30&appostype=2&appversion=2.2.0&channel=appstore&id=%ld&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=cases&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
 
-#define CASE_ALL_HOME_URL (SERVER_URL@"action=home&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=cases&page=%ld&price=0&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&style=%@&type=%@&area=%@&uid=0&version=2.2")
+#define CASE_ALL_HOME_URL (SERVER_URL@"?action=home&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=cases&page=%ld&price=0&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&style=%@&type=%@&area=%@&uid=0&version=2.2")
 
-#define CASE_ALL_PUBLIC_URL (SERVER_URL@"action=public&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=cases&page=%ld&price=0&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&type=%@&area=%@&uid=0&version=2.2")
+#define CASE_ALL_PUBLIC_URL (SERVER_URL@"?action=public&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=cases&page=%ld&price=0&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&type=%@&area=%@&uid=0&version=2.2")
 
-#define QUEANDANS_ACTIVE_URL (SERVER_URL@"action=index&appid=30&appostype=2&appversion=2.2.0&askType=%@&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=ask&page=%ld&pageSize=15&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
-#define QUEANDANS_DETAIL_URL (SERVER_URL@"action=detail&appid=30&appostype=2&appversion=2.2.0&channel=appstore&id=%ld&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=ask&page=%ld&pageSize=20&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
+#define PIC_HOME_LIST_URL (SERVER_URL@"?action=list&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&kind=home&module=works&page=%ld&space=%@&style=%@&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
 
+#define PIC_PUBLIC_LIST_URL (SERVER_URL@"?action=list&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&kind=public&module=works&page=%ld&space=%@&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
 
-#define PIC_HOME_LIST_URL (SERVER_URL@"action=list&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&kind=home&module=works&page=%ld&space=%@&style=%@&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
+#define PICTURE_DETAIL_URL (SERVER_URL@"?action=detail&appid=30&appostype=2&appversion=2.2.0&askNum=10&channel=appstore&colNum=10&id=%ld&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=works&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
 
-#define PIC_PUBLIC_LIST_URL (SERVER_URL@"action=list&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&kind=public&module=works&page=%ld&space=%@&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
+#define PICTURE_COL_URL @"action=getImgList&appid=30&appostype=2&appversion=2.2.0&channel=appstore&id=%ld&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=collections&page=%ld&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2"
+
+#define QUEANDANS_ACTIVE_URL (SERVER_URL@"?action=index&appid=30&appostype=2&appversion=2.2.0&askType=%@&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=ask&page=%ld&pageSize=15&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
+#define QUEANDANS_DETAIL_URL (SERVER_URL@"?action=detail&appid=30&appostype=2&appversion=2.2.0&channel=appstore&id=%ld&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=ask&page=%ld&pageSize=20&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
+
+#define QUEANDANS_PRAISE_URL (SERVER_URL@"?action=answerPraise&appid=30&appostype=2&appversion=2.2.0&channel=appstore&id=%ld&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=ask&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2")
+
+#define FINDDESIGNER_PARAMS_URL @"action=list&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=sjs&pageSize=20&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2&orderBy=%@&page=%ld&city=%@&space=%@"
+
+#define MEMBERINFO_DETAIL_URL @"action=index&appid=30&appostype=2&appversion=2.2.0&caseNum=0&channel=appstore&id=%ld&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=sjs&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2"
+
+#define MEMBERINFO_CASELIST_URL @"action=caseList&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=sjs&page=%ld&sjsId=%ld&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2"
+
+#define MEMBERINFO_ARTICLE_URL @"action=article&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=sjs&page=%ld&sjsId=%ld&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=5606734_87389381ee54b72ff9b84c7062e70366&uid=5606734&version=2.2"
+
+#define MEMBERINFO_TRADECOMMENT_URL @"action=tradeComment&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=sjs&sjsId=%ld&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=5606734_87389381ee54b72ff9b84c7062e70366&tradeNums=15&tradePage=%ld&uid=5606734&version=2.2"
+
+#define APPLY_CUSTOM_DESIGN_URL @"http://m.shejiben.com/appZb?systemversion=9.0&uid=0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&appostype=2&version=2.2&to8to_token=&appid=30&appversion=2.2.0"

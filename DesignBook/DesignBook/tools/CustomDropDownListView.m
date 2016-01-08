@@ -33,6 +33,9 @@
 - (instancetype)initWithDataArray:(NSArray *)dataArray  andFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout{
     NSInteger row = (dataArray.count+2)/3;
     frame.size.height=row*54+20;
+    if(row*54+20>[UIScreen mainScreen].bounds.size.height-64-44-49){
+        frame.size.height=[UIScreen mainScreen].bounds.size.height-64-44-49;
+    }
     if(self=[super initWithFrame:frame collectionViewLayout:layout]){
         self.backgroundColor=[UIColor colorWithRed:0.92f green:0.91f blue:0.92f alpha:1.00f];
         self.dataArray=dataArray;
@@ -53,7 +56,6 @@
     [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
     [btn refreshRightLeft];
-//    [btn addTarget:self action:@selector(headerBtnTouch:) forControlEvents:UIControlEventTouchUpInside];
     btn.layer.borderWidth=1.0f;
     btn.layer.borderColor=[[UIColor lightGrayColor] CGColor];
 }
@@ -75,6 +77,12 @@
     cell.backgroundColor=[UIColor clearColor];
     cell.contentView.backgroundColor=[UIColor clearColor];
     
+    cell.layer.borderColor=[[UIColor whiteColor]CGColor];
+    cell.layer.borderWidth=1.0f;
+    for (UIView * view in cell.contentView.subviews) {
+        [view removeFromSuperview];
+    }
+    
     UILabel * label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, (WIDTH-80)/3, 30)];
     label.text=self.dataArray[indexPath.item];
     label.font=[UIFont systemFontOfSize:14];
@@ -84,7 +92,7 @@
     [cell.contentView addSubview:label];
     label.layer.masksToBounds=YES;
     label.layer.cornerRadius=2;
-    if(indexPath.item==0){
+    if(indexPath.item==self.indexPath.item){
         cell.layer.borderColor=[[UIColor redColor]CGColor];
         cell.layer.borderWidth=1.0f;
         label.textColor=[UIColor redColor];
@@ -93,9 +101,26 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    [self refreshBtnTitle:indexPath];
+    [self.mainViewDelegate itemSelectedWithMainView:self andIndexPath:indexPath andBtn:self.headerBtn];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    return CGSizeMake((WIDTH-80)/3, 30);
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
+    return UIEdgeInsetsMake(20, 20, 0, 20);
+}
+
+- (void)selectItemAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated scrollPosition:(UICollectionViewScrollPosition)scrollPosition{
+    [self refreshBtnTitle:indexPath];
+}
+
+- (void)refreshBtnTitle:(NSIndexPath *)indexPath{
     self.indexPath=indexPath;
-    UICollectionViewCell * selectedCell = [collectionView cellForItemAtIndexPath:indexPath];
-    for (UIView * view in collectionView.subviews) {
+    UICollectionViewCell * selectedCell = [self cellForItemAtIndexPath:indexPath];
+    for (UIView * view in self.subviews) {
         if([[view class] isSubclassOfClass:[UICollectionViewCell class]]){
             UICollectionViewCell * cell = (UICollectionViewCell *)view;
             if(cell==selectedCell){
@@ -114,15 +139,6 @@
     }
     [self.headerBtn setTitle:self.dataArray[indexPath.item] forState:UIControlStateNormal];
     [self.headerBtn refreshRightLeft];
-    [self.mainViewDelegate itemSelectedWithMainView:self andIndexPath:indexPath andBtn:self.headerBtn];
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake((WIDTH-80)/3, 30);
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-    return UIEdgeInsetsMake(20, 20, 0, 20);
 }
 
 @end

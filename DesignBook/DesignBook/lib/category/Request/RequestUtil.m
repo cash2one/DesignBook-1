@@ -86,4 +86,18 @@
     return paramsStr;
 }
 
++ (NSDictionary *)getParamsWithString:(NSString *)value{
+    NSMutableDictionary * dict=[NSMutableDictionary new];
+    
+    NSArray * array=[value componentsSeparatedByString:@"&"];
+    for (NSString * keyValue in array) {
+        NSArray * tmpKeyValueArr=[keyValue componentsSeparatedByString:@"="];
+        NSString * key=tmpKeyValueArr[0];
+        NSString * value=tmpKeyValueArr[1];
+        value=value.length?value:@"";
+        [dict setObject:value forKey:key];
+    }
+    return dict;
+}
+
 @end

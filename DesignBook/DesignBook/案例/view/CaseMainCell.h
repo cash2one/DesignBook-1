@@ -11,6 +11,8 @@
 
 @interface CaseMainCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *headerImageView;
+
 @property(nonatomic,strong)Case * cases;
 
 @end

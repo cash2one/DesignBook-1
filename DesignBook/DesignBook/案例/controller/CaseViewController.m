@@ -106,6 +106,9 @@
         [SQLiteManager deleteWithTableName:@"cases" andClass:nil andParams:nil];
         [SQLiteManager deleteWithTableName:nil andClass:[Parsing class] andParams:nil];
         [SQLiteManager deleteWithTableName:nil andClass:[Banner class] andParams:nil];
+        self.casesArray=nil;
+        self.jiexiArray=nil;
+        self.bannerArray=nil;
         [self downloadData];
     }
 }

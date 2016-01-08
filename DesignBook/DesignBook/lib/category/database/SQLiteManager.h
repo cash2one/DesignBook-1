@@ -14,6 +14,8 @@
 
 #define DATABASE_PATH @"/Library/Caches/database.sqlite3"
 
+#define SDWEBIMAGE_PATH @"%@/Library/Caches/default/com.hackemist.SDWebImageCache.default"
+
 @interface SQLiteManager : NSObject
 
 /**
@@ -83,5 +85,7 @@
 + (BOOL)deleteWithTableName:(NSString *)tableName andClass:(Class)clazz andParams:(NSDictionary *)params;
 
 + (BOOL)updateWithTableName:(NSString *)tableName andClass:(Class)clazz andParams:(NSDictionary *)params andWhereParams:(NSDictionary *)whereParams;
+
++ (NSInteger)cacheSize;
 
 @end

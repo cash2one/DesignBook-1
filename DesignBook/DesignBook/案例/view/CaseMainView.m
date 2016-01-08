@@ -103,6 +103,28 @@
         Parsing * pars=_jiexiArray[i];
         UIImageView * imageView=[[UIImageView alloc]initWithFrame:CGRectMake(150*i, 10, 140, 100)];
         [imageView sd_setImageWithURL:[NSURL URLWithString:pars.imgUrl] placeholderImage:[UIImage imageNamed:@"default_logo"]];
+        
+        UIView * zheView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 140, 100)];
+        zheView.backgroundColor=[UIColor colorWithWhite:0.708 alpha:0.5];
+        [imageView addSubview:zheView];
+        
+        UILabel * label=[[UILabel alloc]initWithFrame:CGRectMake(0, 25, 140, 25)];
+        label.text=pars.imgTitle1;
+        label.textAlignment=NSTextAlignmentCenter;
+        label.font=[UIFont systemFontOfSize:15];
+        label.textColor=[UIColor whiteColor];
+        [imageView addSubview:label];
+        
+        UILabel * label2=[[UILabel alloc]initWithFrame:CGRectMake(0, 50, 140, 21)];
+        label2.textAlignment=NSTextAlignmentCenter;
+        label2.text=pars.imgTitle2;
+        label2.font=[UIFont systemFontOfSize:13];
+        label2.textColor=[UIColor whiteColor];
+        [imageView addSubview:label2];
+        
+        UIImageView * hl=[[UIImageView alloc]initWithFrame:CGRectMake(16, 49.5, 108, 5)];
+        hl.image=[UIImage imageNamed:@"line_case"];
+        [imageView addSubview:hl];
         [self.scrollView addSubview:imageView];
     }
     

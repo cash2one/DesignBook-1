@@ -21,7 +21,7 @@
 @property(nonatomic,assign)BOOL isNavigationShow;
 @property(nonatomic,assign)BOOL isTabbarShow;
 @property(nonatomic,copy)UIColor * oldNavBgColor;
-
+@property(nonatomic,assign)UIStatusBarStyle statusBarStyle;
 
 @end
 
@@ -30,6 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets=NO;
+    self.view.backgroundColor=[UIColor whiteColor];
     [self loadNavicationBar];
     [self loadWebView];
     [self loadWebProgressView];
@@ -56,7 +57,7 @@
 }
 
 - (void)shareWebView{
-    [UMSocialSnsService presentSnsIconSheetView:self appKey:KUMengKey shareText:self.requestUrl shareImage:self.shareImage shareToSnsNames:@[UMShareToSina,UMShareToQQ,UMShareToWechatSession,UMShareToRenren] delegate:nil];
+    [UMSocialSnsService presentSnsController:self appKey:KUMengKey shareText:self.requestUrl shareImage:self.shareImage shareToSnsNames:@[UMShareToSina,UMShareToQQ,UMShareToWechatSession,UMShareToRenren] delegate:nil];
 }
 
 - (void)loadWebView{
@@ -92,6 +93,8 @@
     self.navigationController.navigationBar.barTintColor=self.oldNavBgColor;
     [AppDelegate getTabbar].hidden=NO;
     
+    [UIApplication sharedApplication].statusBarStyle=self.statusBarStyle;
+    
     [self.webView removeObserver:self forKeyPath:@"title"];
     
     [super viewWillDisappear:animated];
@@ -103,12 +106,15 @@
     self.isNavigationShow = self.navigationController.navigationBarHidden;
     self.isTabbarShow = self.tabBarController.tabBar.hidden;
     self.oldNavBgColor=self.navigationController.navigationBar.barTintColor;
+    self.statusBarStyle=[UIApplication sharedApplication].statusBarStyle;
     
     //设置现在要处的状态
     self.tabBarController.tabBar.hidden=YES;
     self.navigationController.navigationBarHidden=NO;
     self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
     [AppDelegate getTabbar].hidden=YES;
+    [UIApplication sharedApplication].statusBarStyle=UIStatusBarStyleDefault;
+    self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
     
     [super viewDidAppear:animated];
 }

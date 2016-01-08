@@ -7,9 +7,12 @@
 //
 
 #import "QueAnsDetailViewController.h"
+#import "NormalUserViewController.h"
+#import "MemberViewController.h"
 #import "QueAndAnsDetailMainView.h"
+#import "UIImageView+WebCache.h"
 
-@interface QueAnsDetailViewController ()<RequestUtilDelegate>
+@interface QueAnsDetailViewController ()<RequestUtilDelegate,QueAndAnsDetailMainViewDelegate>
 
 @property(nonatomic,strong)UIAlertView * alertView;
 
@@ -31,7 +34,8 @@
 
 #pragma mark - 初始加载
 - (void)loadMainView{
-    QueAndAnsDetailMainView * mainView=[[QueAndAnsDetailMainView alloc]initWithFrame:CGRectMake(0, 64, WIDTH, HEIGHT-64-44)];
+    QueAndAnsDetailMainView * mainView=[[QueAndAnsDetailMainView alloc]initWithFrame:CGRectMake(0, 64, WIDTH, HEIGHT-64-44) andQueAndAns:self.queAndAns];
+    mainView.mainViewDelegate = self;
     [self.view addSubview:mainView];
     self.mainView=mainView;
 }
@@ -62,7 +66,31 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)shareWebView{
-    [UMSocialSnsService presentSnsIconSheetView:self appKey:KUMengKey shareText:self.queAndAns.shareUrl shareImage:nil shareToSnsNames:@[UMShareToSina,UMShareToQQ,UMShareToWechatSession,UMShareToRenren] delegate:nil];
+    UIImageView * imageView=[[UIImageView alloc]init];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:self.queAndAns.pics[0]]];
+    
+    [UMSocialSnsService presentSnsController:self appKey:KUMengKey shareText:self.queAndAns.shareUrl shareImage:imageView.image shareToSnsNames:@[UMShareToSina,UMShareToQQ,UMShareToWechatSession,UMShareToRenren] delegate:nil];
+}
+
+- (void)praiseNumBtnTouchWithIndex:(NSInteger)index{
+    NSLog(@"点赞%ld",index);
+}
+
+- (void)headerImageViewBtnTouchWithIndex:(NSInteger)index{
+    Comment * comment = self.commmentArray[index];
+    MemberInfo * memberInfo=[MemberInfo new];
+    memberInfo.uid=comment.uid;
+    memberInfo.facePic=comment.facePic;
+    memberInfo.nick=comment.nick;
+    if(comment.identity==1){
+        MemberViewController * con=[MemberViewController new];
+        [self.navigationController pushViewController:con animated:YES];
+        con.memberInfo=memberInfo;
+    }else{
+        NormalUserViewController * con=[NormalUserViewController new];
+        [self.navigationController pushViewController:con animated:YES];
+        con.memberInfo=memberInfo;
+    }
 }
 #pragma mark - 下载数据
 - (void)downloadData{

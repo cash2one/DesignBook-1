@@ -28,7 +28,7 @@ static TFilterTypeList * sharedInstance;
 }
 
 - (NSDictionary *)objectClassInArray{
-    return @{@"loveStyle":[Filter class],@"nowStep":[Filter class],@"homeType":[Filter class]};
+    return @{@"homeType":[Filter class]};
 }
 
 - (NSString *)description{

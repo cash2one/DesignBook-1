@@ -7,14 +7,20 @@
 //
 
 #import "DisSearchDesViewController.h"
+#import "MemberViewController.h"
+#import "UIButton+RefreshLocation.h"
 #import "CustomDropDownListView.h"
+#import "DisSearchDesMainView.h"
 #import "TFilterTypeList.h"
+#import "MemberInfo.h"
 
-@interface DisSearchDesViewController ()<RequestUtilDelegate,CustomDropDownListViewDelegate>
+@interface DisSearchDesViewController ()<RequestUtilDelegate,CustomDropDownListViewDelegate,DisSearchDesMainViewDelegate>
 
 @property(nonatomic,strong)UIAlertView * alertView;
 
 @property(nonatomic,strong)RequestUtil * requestUtil;
+
+@property(nonatomic,weak)DisSearchDesMainView * mainView;
 
 @property(nonatomic,weak)UIView * headerView;
 
@@ -26,7 +32,7 @@
 @property(nonatomic,strong)NSMutableArray * btnArray;
 @property(nonatomic,strong)NSMutableArray * dropListViewArray;
 @property(nonatomic,strong)NSMutableArray * expandArray;
-@property(nonatomic,strong)NSMutableArray * indexArray;
+//@property(nonatomic,strong)NSMutableArray * indexArray;
 
 @end
 
@@ -36,14 +42,15 @@
     [super viewDidLoad];
     [self loadNavigationBar];
     [self loadMainView];
+    [self downloadData];
 }
 
 #pragma mark - 初始化
 - (void)loadMainView{
-//    CaseAllMainView * mainView=[[CaseAllMainView alloc]initWithFrame:CGRectMake(0, 64+44, WIDTH, HEIGHT-108)];
-//    mainView.mainViewDelegate=self;
-//    self.mainView=mainView;
-//    [self.view addSubview:mainView];
+    DisSearchDesMainView * mainView=[[DisSearchDesMainView alloc]initWithFrame:CGRectMake(0, 64+44, WIDTH, HEIGHT-108)];
+    mainView.mainViewDelegate=self;
+    self.mainView=mainView;
+    [self.view addSubview:mainView];
     
     CGFloat homeW=WIDTH/3;
     CGFloat homeH=44;
@@ -52,16 +59,19 @@
     self.headerView=homeHeadView;
     [self.view addSubview:homeHeadView];
     
-    NSArray * frameArray=@[NSStringFromCGRect(CGRectMake(0, 0, homeW, homeH)),NSStringFromCGRect(CGRectMake(homeW, 0, homeW, homeH)),NSStringFromCGRect(CGRectMake(homeW*2, 0, homeW, homeH))];
+    NSArray * frameArray=@[NSStringFromCGRect(CGRectMake(0, 0, homeW, homeH)),NSStringFromCGRect(CGRectMake(homeW-1, 0, homeW+1, homeH)),NSStringFromCGRect(CGRectMake(homeW*2-1, 0, homeW+1, homeH))];
     
     NSArray * titleArray=@[self.findDesigner.hotCity,self.findDesigner.space,self.findDesigner.order];
     
     for(int i=0;i<titleArray.count;i++){
+        NSInteger index=[self.indexArray[i] integerValue];
+        NSIndexPath * indexPath=[NSIndexPath indexPathForItem:index inSection:0];
         CGRect frame=CGRectFromString(frameArray[i]);
         NSArray * dataArray=titleArray[i];
+        
         NSString * title;
         if(i==2){
-            Filter * filter=dataArray [0];
+            Filter * filter=dataArray [index];
             title=filter.name;
             NSMutableArray * tmp=[NSMutableArray new];
             for (Filter * filter in dataArray) {
@@ -69,7 +79,7 @@
             }
             dataArray=tmp;
         }else{
-            title=dataArray[0];
+            title=dataArray[index];
         }
         UIButton * btn=[UIButton buttonWithType:UIButtonTypeCustom];
         btn.tag=i;
@@ -82,12 +92,17 @@
         [view setBtnStyle:btn andTitle:title andFrame:frame];
         [btn addTarget:self action:@selector(headerBtnTouch:) forControlEvents:UIControlEventTouchUpInside];
         [self.expandArray addObject:@(0)];
-        [self.indexArray addObject:@(0)];
         [homeHeadView addSubview:btn];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [view selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+        });
     }
 }
 
 - (void)loadNavigationBar{
+    self.navigationController.navigationBar.barTintColor=[UIColor whiteColor];
+    self.navigationItem.title=@"设计师";
     UIBarButtonItem * bbil=[[UIBarButtonItem alloc]initWithImage:[[UIImage imageNamed:@"ico_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(backToPrevious)];
     self.navigationItem.leftBarButtonItem=bbil;
 }
@@ -112,12 +127,35 @@
     }
 }
 
+#pragma mark - mainView代理
+- (void)itemSelectedWithMainView:(DisSearchDesMainView *)mainView andIndexPath:(NSIndexPath *)indexPath{
+    MemberViewController * con=[MemberViewController new];
+    [self.navigationController pushViewController:con animated:YES];
+    con.memberInfo=self.dataArray[indexPath.row];
+}
+
+- (void)refreshWithMainView:(DisSearchDesMainView *)mainView andRefreshComponent:(MJRefreshComponent *)baseView{
+    if(baseView==mainView.mj_header){
+        self.dataArray=nil;
+    }
+    [self downloadData];
+}
 
 #pragma mark - 下拉列表每一项点击事件
 - (void)itemSelectedWithMainView:(CustomDropDownListView *)mainView andIndexPath:(NSIndexPath *)indexPath andBtn:(UIButton *)btn{
     [self headerBtnTouch:btn];
-//    self.mainView.page=0;
+    self.mainView.page=0;
     NSInteger index = [self.btnArray indexOfObject:btn];
+    if(index==0){
+        if(indexPath.row==0){
+            [btn setTitle:@"所在城市" forState:UIControlStateNormal];
+        }
+    }else if (index==1){
+        if(indexPath.row==0){
+            [btn setTitle:@"擅长空间" forState:UIControlStateNormal];
+        }
+    }
+    [btn refreshRightLeft];
     self.indexArray[index]=@(indexPath.item);
     self.dataArray=nil;
     [self downloadData];
@@ -125,19 +163,32 @@
 
 #pragma mark - 下载数据
 - (void)downloadData{
-//    [self.alertView show];
-    //先从数据库取
-//    NSString * urlString;
-//    [self.requestUtil asyncThirdLibWithUrl:urlString andParameters:nil andMethod:RequestMethodGet andTimeoutInterval:10];
+    [self.alertView show];
+    NSString * city=self.findDesigner.hotCity[[self.indexArray[0] integerValue]];
+    
+    NSString * space;
+    if([self.indexArray[1]integerValue]==0){
+        space=@"";
+    }else{
+        space=self.findDesigner.space[[self.indexArray[1]integerValue]];
+    }
+    Filter * filter=self.findDesigner.order[[self.indexArray[2] integerValue]];
+    
+    NSString * param=[NSString stringWithFormat:FINDDESIGNER_PARAMS_URL,filter.Id,self.mainView.page+1,city,space];
+    [self.requestUtil asyncThirdLibWithUrl:SERVER_URL andParameters:[RequestUtil getParamsWithString:param] andMethod:RequestMethodPost andTimeoutInterval:10];
 }
+
+
 
 - (void)response:(NSURLResponse *)response andError:(NSError *)error andData:(NSData *)data andStatusCode:(NSInteger)statusCode andURLString:(NSString *)urlString{
     [self.alertView dismissWithClickedButtonIndex:0 animated:NO];
     if(statusCode==200 && !error){
         NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         NSArray * dataArray = dict[@"data"];
-        NSLog(@"%@",dataArray);
-        
+        for (NSDictionary * memberDict in dataArray) {
+            [self.dataArray addObject:[MemberInfo memberInfoWithDict:memberDict]];
+        }
+        self.mainView.dataArray=self.dataArray;
     }else{
         NSLog(@"%@",error);
         UIAlertView * av=[[UIAlertView alloc]initWithTitle:@"数据请求失败！" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];

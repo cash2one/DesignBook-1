@@ -49,6 +49,9 @@
     memberImageView.layer.borderColor = [[UIColor whiteColor] CGColor];
     memberImageView.layer.borderWidth = 1.0f;
     [memberImageView sd_setImageWithURL:[NSURL URLWithString:self.cases.facePic] placeholderImage:[UIImage imageNamed:@"default_portrait"]];
+    UITapGestureRecognizer * tgr=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(headerImageViewTouch:)];
+    memberImageView.userInteractionEnabled=YES;
+    [memberImageView addGestureRecognizer:tgr];
     [view addSubview:memberImageView];
     
     UILabel * label=[[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(memberImageView.frame)+8, 208, 200, 21)];
@@ -85,6 +88,10 @@
     self.tableHeaderView=view;
 }
 
+- (void)headerImageViewTouch:(UITapGestureRecognizer *)tgr{
+    [self.mainViewDelegate headerImageViewTouch];
+}
+
 - (void)callPhone{
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",self.cases.phoneNum400]]];
 }
@@ -110,8 +117,17 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 500;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.1;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.mainViewDelegate itemSelectedWithMainView:self andIndexPath:indexPath];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -141,7 +157,7 @@
     _cases=cases;
     CGSize size=CGSizeMake(WIDTH-16, MAXFLOAT);
     size=[cases.comment boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil].size;
-    self.headerHeight=200+70+size.height;
+    self.headerHeight=200+70+size.height+10;
     self.commentHeight=size.height;
     [self setheaderView];
     [self reloadData];

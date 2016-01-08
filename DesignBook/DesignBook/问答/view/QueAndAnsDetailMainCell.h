@@ -11,6 +11,10 @@
 
 @interface QueAndAnsDetailMainCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *headerImageView;
+
+@property (weak, nonatomic) IBOutlet UIButton *praiseNumBtn;
+
 @property(nonatomic,strong)Comment * comment;
 
 @end

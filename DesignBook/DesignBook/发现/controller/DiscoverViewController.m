@@ -26,7 +26,7 @@
     
     [self loadMainView];
 }
-
+#pragma mark - 初始化
 - (void)loadMainView{
     DiscoverMainView *mainView=[[DiscoverMainView alloc]initWithFrame:CGRectMake(0, 64, WIDTH, HEIGHT-64) style:UITableViewStyleGrouped];
     mainView.mainViewDelegate=self;
@@ -54,11 +54,27 @@
 
 - (void)btnTouchAndIndex:(NSInteger)index{
     if(index==0){
-        [self.navigationController pushViewController:[DisSearchDesViewController new] animated:YES];
+        DisSearchDesViewController * con= [DisSearchDesViewController new];
+        [self.navigationController pushViewController:con animated:YES];
+        con.indexArray=[NSMutableArray arrayWithArray:@[@(0),@(0),@(0)]];
     }else{
         WebViewController * con = [WebViewController new];
         [self.navigationController pushViewController:con animated:YES];
         con.requestUrl=@"http://m.shejiben.com/appZb?systemversion=9.0&uid=0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&appostype=2&version=2.2&to8to_token=&appid=30&appversion=2.2.0";
+    }
+}
+
+- (void)itemSelectedWithMainView:(DiscoverMainView *)mainView andIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.section==0){
+        DisSearchDesViewController * con= [DisSearchDesViewController new];
+        [self.navigationController pushViewController:con animated:YES];
+        if(indexPath.row==0){
+            con.indexArray=[NSMutableArray arrayWithArray:@[@(1),@(0),@(0)]];
+        }else{
+            con.indexArray=[NSMutableArray arrayWithArray:@[@(0),@(0),@(3)]];
+        }
+    }else{
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"tel://400-680-8509,9999"]];
     }
 }
 
@@ -93,6 +109,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [UIApplication sharedApplication].statusBarStyle=UIStatusBarStyleDefault;
     self.navigationController.navigationBarHidden=YES;
+    [AppDelegate getTabbar].hidden=NO;
 }
 
 @end

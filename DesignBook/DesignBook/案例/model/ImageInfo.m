@@ -12,7 +12,28 @@
 @implementation ImageInfo
 
 + (instancetype)imageInfoWithDict:(NSDictionary *)dict{
-    return [self objectWithDict:dict];
+    ImageInfo * imageInfo = [self objectWithDict:dict];
+    if(imageInfo.memberInfo){
+        id dict=imageInfo.memberInfo;
+        imageInfo.memberInfo=[MemberInfo memberInfoWithDict:dict];
+    }
+    if([[imageInfo.colList class]isSubclassOfClass:[NSArray class]]){
+        NSMutableArray * array=[NSMutableArray new];
+        for (NSDictionary * dict in imageInfo.colList) {
+            [array addObject:[PictureCol pictureColWithDict:dict]];
+        }
+        imageInfo.colList=array.count?array:nil;
+    }
+    
+    if([[imageInfo.askList class]isSubclassOfClass:[NSArray class]]){
+        NSMutableArray * array=[NSMutableArray new];
+        for (NSDictionary * dict in imageInfo.askList) {
+            [array addObject:[QueAndAns queAndAnsWithDict:dict]];
+        }
+        imageInfo.askList=array.count?array:nil;
+    }
+    
+    return imageInfo;
 }
 
 @end

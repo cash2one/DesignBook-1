@@ -11,4 +11,6 @@
 
 @interface DisSearchDesViewController : RootViewController
 
+@property(nonatomic,strong)NSMutableArray * indexArray;
+
 @end

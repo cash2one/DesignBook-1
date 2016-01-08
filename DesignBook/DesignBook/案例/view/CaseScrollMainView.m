@@ -42,6 +42,19 @@
     }];
     [view addSubview:headerImageView];
     
+    UILabel * nameLabel=[[UILabel alloc]initWithFrame:headerImageView.frame];
+    [view addSubview:nameLabel];
+    nameLabel.text=self.banner.name;
+    nameLabel.font=[UIFont systemFontOfSize:22];
+    nameLabel.textColor=[UIColor whiteColor];
+    nameLabel.textAlignment=NSTextAlignmentCenter;
+    nameLabel.numberOfLines=2;
+    
+    UIView * namehl=[[UIView alloc]initWithFrame:CGRectMake(WIDTH*0.5-70, 160, 140, 1)];
+    namehl.backgroundColor=[UIColor whiteColor];
+    [view addSubview:namehl];
+    
+    
     UIImageView *memberImageView=[[UIImageView alloc]initWithFrame:CGRectMake(WIDTH*0.5-25, 200-25, 50, 50)];
     self.memberImageView=memberImageView;
     memberImageView.layer.masksToBounds=YES;
@@ -49,6 +62,9 @@
     memberImageView.layer.borderColor = [[UIColor whiteColor] CGColor];
     memberImageView.layer.borderWidth = 1.0f;
     [memberImageView sd_setImageWithURL:[NSURL URLWithString:self.banner.memberInfo.facePic] placeholderImage:[UIImage imageNamed:@"default_portrait"]];
+    UITapGestureRecognizer * tgr=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(headerImageViewTouch:)];
+    memberImageView.userInteractionEnabled=YES;
+    [memberImageView addGestureRecognizer:tgr];
     [view addSubview:memberImageView];
     
     UILabel * label=[[UILabel alloc]initWithFrame:CGRectMake(0, 225, WIDTH, 35)];
@@ -69,6 +85,10 @@
     commentLabel.text=self.banner.comment;
     [view addSubview:commentLabel];
     self.tableHeaderView=view;
+}
+
+- (void)headerImageViewTouch:(UITapGestureRecognizer *)tgr{
+    [self.mainViewDelegate headerImageViewTouch];
 }
 
 #pragma mark - tableView的协议方法
@@ -94,6 +114,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.1;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.mainViewDelegate itemSelectedWithMainView:self andIndexPath:indexPath];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -123,7 +148,7 @@
     _banner=banner;
     CGSize size=CGSizeMake(WIDTH-16, MAXFLOAT);
     size=[banner.comment boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil].size;
-    self.headerHeight=200+70+size.height;
+    self.headerHeight=200+70+size.height+10;
     self.commentHeight=size.height;
     [self setheaderView];
     [self reloadData];

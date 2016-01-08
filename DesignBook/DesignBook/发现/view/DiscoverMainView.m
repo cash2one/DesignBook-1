@@ -113,6 +113,10 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.mainViewDelegate itemSelectedWithMainView:self andIndexPath:indexPath];
+}
+
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView * view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH, 20)];
     view.backgroundColor=[UIColor colorWithRed:0.96f green:0.96f blue:0.96f alpha:1.00f];

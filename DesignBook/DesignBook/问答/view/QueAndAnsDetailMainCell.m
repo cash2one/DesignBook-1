@@ -11,14 +11,12 @@
 #import "UIView+Frame.h"
 
 @interface QueAndAnsDetailMainCell()
-
-@property (weak, nonatomic) IBOutlet UIImageView *headerImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *designerImageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *nickLabel;
 @property (weak, nonatomic) IBOutlet UILabel *createTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
-@property (weak, nonatomic) IBOutlet UIButton *praiseNumBtn;
+
 @property (weak, nonatomic) IBOutlet UIButton *replyBtn;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *nickWidthConst;
 
@@ -29,6 +27,15 @@
 - (void)awakeFromNib {
     self.headerImageView.layer.masksToBounds=YES;
     self.headerImageView.layer.cornerRadius=self.headerImageView.width*0.5;
+    self.praiseNumBtn.layer.borderWidth=1.f;
+    self.praiseNumBtn.layer.borderColor=[[UIColor lightGrayColor] CGColor];
+    self.praiseNumBtn.layer.masksToBounds=YES;
+    self.praiseNumBtn.layer.cornerRadius=self.praiseNumBtn.height*0.5;
+    
+    self.replyBtn.layer.borderWidth=1.f;
+    self.replyBtn.layer.borderColor=[[UIColor lightGrayColor] CGColor];
+    self.replyBtn.layer.masksToBounds=YES;
+    self.replyBtn.layer.cornerRadius=self.replyBtn.height*0.5;
 }
 
 - (void)setComment:(Comment *)comment{

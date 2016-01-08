@@ -8,12 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import "Banner.h"
+@class CaseScrollMainView;
 
+@protocol CaseScrollMainViewDelegate <NSObject>
+
+- (void)itemSelectedWithMainView:(CaseScrollMainView *)mainView andIndexPath:(NSIndexPath *)indexPath;
+
+- (void)headerImageViewTouch;
+
+@end
 
 @interface CaseScrollMainView : UITableView<UITableViewDataSource,UITableViewDelegate>
 
 @property(nonatomic,strong)Banner  * banner;
 
 @property(nonatomic,strong)UIImage * shareImage;
+
+@property(nonatomic,weak)id<CaseScrollMainViewDelegate>mainViewDelegate;
 
 @end

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MJRefresh.h"
-#import "PictureInfo.h"
+#import "ImageInfo.h"
 @class PicStorageMainView;
 
 @protocol PicStorageMainViewDelegate <NSObject>

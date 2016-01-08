@@ -12,6 +12,8 @@
 @interface CaseScrollMainCell()
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
+@property (weak, nonatomic) IBOutlet UILabel *commentLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *commentHeightCons;
 
 @end
 
@@ -20,6 +22,10 @@
 - (void)setImageInfo:(ImageInfo *)imageInfo{
     _imageInfo=imageInfo;
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:imageInfo.imgUrl] placeholderImage:[UIImage imageNamed:@"default_logo"]];
+    CGSize size=CGSizeMake(WIDTH-16, MAXFLOAT);
+    size=[imageInfo.comment boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.commentLabel.font} context:nil].size;
+    self.commentHeightCons.constant=size.height;
+    self.commentLabel.text=imageInfo.comment;
 }
 
 @end

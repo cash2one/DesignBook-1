@@ -44,5 +44,7 @@ typedef enum RequestMethod{
 
 - (void)asyncThirdLibWithUrl:(NSString *)urlString andParameters:(NSDictionary *)parameters andMethod:(RequestMethod)method andTimeoutInterval:(NSInteger)timeoutInterval;
 
++ (NSDictionary *)getParamsWithString:(NSString *)value;
+
 @end
 
