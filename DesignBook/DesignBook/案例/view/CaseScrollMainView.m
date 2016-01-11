@@ -121,6 +121,11 @@
     [self.mainViewDelegate itemSelectedWithMainView:self andIndexPath:indexPath];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    ImageInfo * imageInfo=self.banner.imgList[indexPath.row];
+    return imageInfo.height;
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     CGFloat y=scrollView.contentOffset.y;
     if(y<0){

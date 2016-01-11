@@ -118,7 +118,8 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 500;
+    ImageInfo * imageInfo=self.cases.imgList[indexPath.row];
+    return imageInfo.height;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{

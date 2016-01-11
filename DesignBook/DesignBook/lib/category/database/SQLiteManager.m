@@ -332,7 +332,7 @@ static SQLiteManager * manager;
         fileSize+=error?0:[dict fileSize];
     }
     
-    NSTimeInterval time=[date timeIntervalSinceNow];
+//    NSTimeInterval time=[date timeIntervalSinceNow];
 //    NSLog(@"size%f-->%f",fileSize*1.0/1024/1024,time);
     return fileSize;
 }

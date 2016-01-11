@@ -1,0 +1,14 @@
+//
+//  SearchViewController.h
+//  DesignBook
+//
+//  Created by 陈行 on 16-1-9.
+//  Copyright (c) 2016年 陈行. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "RootViewController.h"
+
+@interface SearchViewController : RootViewController
+
+@end

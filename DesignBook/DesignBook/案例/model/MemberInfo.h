@@ -14,6 +14,7 @@
 @property(nonatomic,assign)NSInteger identity;
 @property(nonatomic,assign)NSInteger goodlevel;
 @property(nonatomic,assign)NSInteger rz;
+@property(nonatomic,assign)NSInteger tradeNum;
 @property(nonatomic,copy)NSString * nick;
 @property(nonatomic,copy)NSString * facePic;
 @property(nonatomic,copy)NSString * goodlevelCN;
@@ -41,6 +42,8 @@
 @property(nonatomic,assign)NSInteger loveStyle;
 
 @property(nonatomic,strong)NSArray * caseList;
+@property(nonatomic,strong)NSArray * commentList;
+@property(nonatomic,strong)NSArray * tradeList;
 
 + (instancetype)memberInfoWithDict:(NSDictionary *)dict;
 

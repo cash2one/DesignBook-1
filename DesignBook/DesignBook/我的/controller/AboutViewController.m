@@ -7,6 +7,7 @@
 //
 
 #import "AboutViewController.h"
+#import "WebViewController.h"
 
 @interface AboutViewController ()
 
@@ -64,7 +65,24 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"%@",indexPath);
+    if(indexPath.row==0){
+        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+        [pasteboard setString:@"shejiben"];
+        UIAlertView * av=[[UIAlertView alloc]initWithTitle:@"微信号已复制成功，请在微信搜索并关注设计本" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [av show];
+    }else if (indexPath.row==1){
+        WebViewController * con=[WebViewController new];
+        [self.navigationController pushViewController:con animated:YES];
+        con.requestUrl=@"http://weibo.com/to8tosjs?systemversion=9.0&uid=5606734&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&appostype=2&version=2.2&to8to_token=5606734_22a7c47f84f4f5af346f5b1ece70e8c4&appid=30&appversion=2.2.0";
+        con.isHiddenShare=YES;
+    }else if (indexPath.row==2){
+        WebViewController * con=[WebViewController new];
+        [self.navigationController pushViewController:con animated:YES];
+        con.requestUrl=@"http://user.qzone.qq.com/49672282?systemversion=9.0&uid=5606734&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&appostype=2&version=2.2&to8to_token=5606734_22a7c47f84f4f5af346f5b1ece70e8c4&appid=30&appversion=2.2.0";
+        con.isHiddenShare=YES;
+    }else if (indexPath.row==3){
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"tel://4006-808-509,9999"]];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

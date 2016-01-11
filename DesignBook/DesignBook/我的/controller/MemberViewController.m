@@ -8,6 +8,7 @@
 
 #import "MemberViewController.h"
 #import "CaseDetailViewController.h"
+#import "WebViewController.h"
 #import "UIImageView+WebCache.h"
 #import "MemberMainView.h"
 #import "BlogArticle.h"
@@ -78,12 +79,22 @@
         CaseDetailViewController * con=[CaseDetailViewController new];
         [self.navigationController pushViewController:con animated:YES];
         con.cases=[self.dataArray[0] objectAtIndex:indexPath.row];
+    }else if (self.sliderCurrentIndex==1){
+        WebViewController * con=[WebViewController new];
+        [self.navigationController pushViewController:con animated:YES];
+        BlogArticle * ba=self.dataArray[1][indexPath.row];
+        con.requestUrl=[NSString stringWithFormat:MEMBERINFO_BLOGDETAIL_URL,ba.Id];
+        con.isHiddenShare=YES;
     }
 }
 
 - (void)sliderView:(CustomSliderView *)sliderView andIndex:(NSInteger)index andBtnArray:(NSArray *)btnArray{
     self.sliderCurrentIndex=index;
-    [self downloadListData];
+    if([self.dataArray[index] count]){
+        self.mainView.dataArray=self.dataArray;
+    }else{
+        [self downloadListData];
+    }
 }
 
 - (void)refreshWithMainView:(MemberMainView *)mainView andRefreshComponent:(MJRefreshComponent *)baseView{
@@ -158,6 +169,8 @@
         if(self.sliderCurrentIndex==2){
             
             
+            
+            self.mainView.dataArray=self.dataArray;
             return;
         }
         

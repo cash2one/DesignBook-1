@@ -50,4 +50,12 @@
 
 #define MEMBERINFO_TRADECOMMENT_URL @"action=tradeComment&appid=30&appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=sjs&sjsId=%ld&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=5606734_87389381ee54b72ff9b84c7062e70366&tradeNums=15&tradePage=%ld&uid=5606734&version=2.2"
 
+#define MEMBERINFO_BLOGDETAIL_URL (SERVER_URL@"?module=sjs&action=blogDetailH5&id=%ld&systemversion=9.0&uid=5606734&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&appostype=2&version=2.2&to8to_token=5606734_22a7c47f84f4f5af346f5b1ece70e8c4&appid=30&appversion=2.2.0")
+
 #define APPLY_CUSTOM_DESIGN_URL @"http://m.shejiben.com/appZb?systemversion=9.0&uid=0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&appostype=2&version=2.2&to8to_token=&appid=30&appversion=2.2.0"
+
+#define SEARCH_LIST_URL (SERVER_URL@"?appostype=2&appversion=2.2.0&channel=appstore&idfa=89645ED5-2C23-4C4F-AE9F-D67A77D36477&module=search&pageSize=20&systemversion=9.0&t8t_device_id=AD9C8E68-5378-4D13-B0F5-97A500D6842E&to8to_token=&uid=0&version=2.2&appid=30&action=%@&keywords=%@&page=%ld")
+
+
+
+

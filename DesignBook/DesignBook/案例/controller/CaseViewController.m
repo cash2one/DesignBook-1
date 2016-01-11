@@ -10,6 +10,7 @@
 #import "CaseScrollViewController.h"
 #import "CaseDetailViewController.h"
 #import "CaseAllViewController.h"
+#import "SearchViewController.h"
 #import "CaseMainView.h"
 #import "Parsing.h"
 #import "Case.h"
@@ -58,7 +59,7 @@
 }
 
 - (void)loadNavigationBar{
-    UIBarButtonItem * bbir=[[UIBarButtonItem alloc]initWithImage:[[UIImage imageNamed:@"ico_case_search"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem * bbir=[[UIBarButtonItem alloc]initWithImage:[[UIImage imageNamed:@"ico_case_search"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(searchBtnTouch)];
     self.navigationItem.rightBarButtonItem=bbir;
     
     UIImageView * imageView=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"AppIcon40x40"]];
@@ -68,7 +69,10 @@
     
 }
 
-
+- (void)searchBtnTouch{
+    SearchViewController * searchController = [[SearchViewController alloc] init];
+    [self.navigationController pushViewController:searchController animated:NO];
+}
 
 - (void)sgr:(UISwipeGestureRecognizer *)sgr{
     if(sgr.direction==UISwipeGestureRecognizerDirectionUp){
@@ -237,6 +241,7 @@
 
 #pragma mark - 系统协议方法
 -(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBarHidden=NO;
     self.navigationController.navigationBar.barTintColor=[UIColor colorWithRed:0.87f green:0.23f blue:0.20f alpha:1.00f];
     [AppDelegate getTabbar].hidden=NO;
     [UIApplication sharedApplication].statusBarStyle=UIStatusBarStyleLightContent;

@@ -49,7 +49,7 @@
     tabbar.frame=CGRectMake(0, HEIGHT-49, WIDTH, 49);
     [tbc.view bringSubviewToFront:tabbar];
     self.myTabbar=tabbar;
-    tabbar.currentIndex=4;
+    tabbar.currentIndex=0;
     
 }
 

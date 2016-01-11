@@ -32,6 +32,7 @@
 		4E0DB4041C3AA034006D2985 /* PicStorageMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0DB4031C3AA034006D2985 /* PicStorageMainView.m */; };
 		4E0DB40B1C3AA05E006D2985 /* PicStorageMainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0DB4091C3AA05E006D2985 /* PicStorageMainCell.m */; };
 		4E0DB40C1C3AA05E006D2985 /* PicStorageMainCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E0DB40A1C3AA05E006D2985 /* PicStorageMainCell.xib */; };
+		4E1186271C4346D400A0FE7D /* MemberCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1186261C4346D400A0FE7D /* MemberCommentView.m */; };
 		4E213CD61C379FE600D1ACFB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E213CD51C379FE600D1ACFB /* main.m */; };
 		4E213CE11C379FE600D1ACFB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E213CE01C379FE600D1ACFB /* Images.xcassets */; };
 		4E213CE41C379FE600D1ACFB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E213CE21C379FE600D1ACFB /* LaunchScreen.xib */; };
@@ -185,6 +186,9 @@
 		4EC767701C3A62B800CC39E9 /* NSObject+MJCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EC767631C3A62B800CC39E9 /* NSObject+MJCoding.m */; };
 		4EC767711C3A62B800CC39E9 /* NSObject+MJKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EC767651C3A62B800CC39E9 /* NSObject+MJKeyValue.m */; };
 		4EC767721C3A62B800CC39E9 /* NSObject+MJMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EC767671C3A62B800CC39E9 /* NSObject+MJMember.m */; };
+		4EDFA8441C40A40A0040121C /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EDFA8431C40A40A0040121C /* SearchViewController.m */; };
+		4EDFA87F1C40EE840040121C /* CustomSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EDFA87E1C40EE840040121C /* CustomSearchView.m */; };
+		4EDFA8821C40FF850040121C /* SearchMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EDFA8811C40FF850040121C /* SearchMainView.m */; };
 		4EF275231C37F2C90063AA8B /* DiscoverMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF275221C37F2C90063AA8B /* DiscoverMainView.m */; };
 		4EFFF0331C37C8770099BF89 /* UMSocialLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4EFFF0181C37C8770099BF89 /* UMSocialLocalizable.strings */; };
 		4EFFF0341C37C8770099BF89 /* libUMSocial_Sdk_4.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EFFF0261C37C8770099BF89 /* libUMSocial_Sdk_4.4.a */; };
@@ -258,6 +262,8 @@
 		4E0DB4081C3AA05E006D2985 /* PicStorageMainCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicStorageMainCell.h; sourceTree = "<group>"; };
 		4E0DB4091C3AA05E006D2985 /* PicStorageMainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicStorageMainCell.m; sourceTree = "<group>"; };
 		4E0DB40A1C3AA05E006D2985 /* PicStorageMainCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PicStorageMainCell.xib; sourceTree = "<group>"; };
+		4E1186251C4346D400A0FE7D /* MemberCommentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberCommentView.h; sourceTree = "<group>"; };
+		4E1186261C4346D400A0FE7D /* MemberCommentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberCommentView.m; sourceTree = "<group>"; };
 		4E213CD01C379FE600D1ACFB /* DesignBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DesignBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E213CD41C379FE600D1ACFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E213CD51C379FE600D1ACFB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -559,6 +565,12 @@
 		4EC767651C3A62B800CC39E9 /* NSObject+MJKeyValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJKeyValue.m"; sourceTree = "<group>"; };
 		4EC767661C3A62B800CC39E9 /* NSObject+MJMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJMember.h"; sourceTree = "<group>"; };
 		4EC767671C3A62B800CC39E9 /* NSObject+MJMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJMember.m"; sourceTree = "<group>"; };
+		4EDFA8421C40A40A0040121C /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		4EDFA8431C40A40A0040121C /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		4EDFA87D1C40EE840040121C /* CustomSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSearchView.h; sourceTree = "<group>"; };
+		4EDFA87E1C40EE840040121C /* CustomSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSearchView.m; sourceTree = "<group>"; };
+		4EDFA8801C40FF850040121C /* SearchMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchMainView.h; sourceTree = "<group>"; };
+		4EDFA8811C40FF850040121C /* SearchMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchMainView.m; sourceTree = "<group>"; };
 		4EF275211C37F2C90063AA8B /* DiscoverMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoverMainView.h; sourceTree = "<group>"; };
 		4EF275221C37F2C90063AA8B /* DiscoverMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoverMainView.m; sourceTree = "<group>"; };
 		4EFFF0191C37C8770099BF89 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/UMSocialLocalizable.strings; sourceTree = "<group>"; };
@@ -700,6 +712,8 @@
 				4E213FCF1C37AE7600D1ACFB /* CaseScrollViewController.m */,
 				4E0D5E6D1C3B5D720027180B /* CaseAllViewController.h */,
 				4E0D5E6E1C3B5D720027180B /* CaseAllViewController.m */,
+				4EDFA8421C40A40A0040121C /* SearchViewController.h */,
+				4EDFA8431C40A40A0040121C /* SearchViewController.m */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -738,6 +752,8 @@
 				4E94ECBC1C37BC8100308011 /* CaseScrollMainCell.xib */,
 				4E0D5E701C3B77190027180B /* CaseAllMainView.h */,
 				4E0D5E711C3B77190027180B /* CaseAllMainView.m */,
+				4EDFA8801C40FF850040121C /* SearchMainView.h */,
+				4EDFA8811C40FF850040121C /* SearchMainView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -958,6 +974,8 @@
 				4E68A52B1C3E8F4700FE1177 /* BlogArticleCell.xib */,
 				4E0D14D41C3F9D0E0060968F /* MineSettingViewController.storyboard */,
 				4E0D14D91C3FA13C0060968F /* AboutViewController.storyboard */,
+				4E1186251C4346D400A0FE7D /* MemberCommentView.h */,
+				4E1186261C4346D400A0FE7D /* MemberCommentView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -977,6 +995,8 @@
 		4E213D131C37A19A00D1ACFB /* tools */ = {
 			isa = PBXGroup;
 			children = (
+				4EDFA87D1C40EE840040121C /* CustomSearchView.h */,
+				4EDFA87E1C40EE840040121C /* CustomSearchView.m */,
 				4E213D141C37A19A00D1ACFB /* CustomNavigationBar.h */,
 				4E213D151C37A19A00D1ACFB /* CustomNavigationBar.m */,
 				4E213D161C37A19A00D1ACFB /* CustomNavigationBarItem.h */,
@@ -1609,6 +1629,7 @@
 				4E213DF41C37A31100D1ACFB /* AFURLSessionManager.m in Sources */,
 				4E213E161C37A31100D1ACFB /* MJRefreshBackGifFooter.m in Sources */,
 				4E213E121C37A31100D1ACFB /* MJRefreshHeader.m in Sources */,
+				4EDFA8441C40A40A0040121C /* SearchViewController.m in Sources */,
 				4E213E111C37A31100D1ACFB /* MJRefreshFooter.m in Sources */,
 				4E213FCA1C37AD5200D1ACFB /* CaseScrollMainCell.m in Sources */,
 				4E213DF11C37A31100D1ACFB /* AFURLConnectionOperation.m in Sources */,
@@ -1648,6 +1669,7 @@
 				4E213FDE1C37B13500D1ACFB /* RootViewController.m in Sources */,
 				4E213FE81C37B37900D1ACFB /* QueAndAnsViewController.m in Sources */,
 				4E213D101C37A0D200D1ACFB /* AppDelegate.m in Sources */,
+				4E1186271C4346D400A0FE7D /* MemberCommentView.m in Sources */,
 				4E0DB40B1C3AA05E006D2985 /* PicStorageMainCell.m in Sources */,
 				4E213E011C37A31100D1ACFB /* FMDatabasePool.m in Sources */,
 				4E213DED1C37A31100D1ACFB /* AFHTTPRequestOperationManager.m in Sources */,
@@ -1729,6 +1751,7 @@
 				4E213FBE1C37AB4700D1ACFB /* CaseMainCell.m in Sources */,
 				4E68A51F1C3E480D00FE1177 /* qrspec.c in Sources */,
 				4E213FCE1C37AE2000D1ACFB /* CaseScrollMainView.m in Sources */,
+				4EDFA8821C40FF850040121C /* SearchMainView.m in Sources */,
 				4E0DB4041C3AA034006D2985 /* PicStorageMainView.m in Sources */,
 				4E213DFA1C37A31100D1ACFB /* NSObject+Description.m in Sources */,
 				4EC7674F1C3A61C800CC39E9 /* CasesPublic.m in Sources */,
@@ -1737,6 +1760,7 @@
 				4E213DF31C37A31100D1ACFB /* AFURLResponseSerialization.m in Sources */,
 				4E213FB11C37A8F100D1ACFB /* Case.m in Sources */,
 				4E213E231C37A31100D1ACFB /* SDImageCache.m in Sources */,
+				4EDFA87F1C40EE840040121C /* CustomSearchView.m in Sources */,
 				4E213E291C37A31100D1ACFB /* SDWebImagePrefetcher.m in Sources */,
 				4EF275231C37F2C90063AA8B /* DiscoverMainView.m in Sources */,
 				4EC766B01C3A23ED00CC39E9 /* TFilterTypeList.m in Sources */,

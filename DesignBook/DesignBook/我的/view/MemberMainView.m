@@ -32,7 +32,6 @@
     if (self) {
         self.dataSource=self;
         self.delegate=self;
-        self.rowHeight=300;
         [self createTableHeaderView];
         
         self.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
@@ -79,6 +78,9 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if(self.currentBtnIndex==2){
+        return 0;
+    }
     return [self.dataArray[self.currentBtnIndex] count];
 }
 
@@ -105,12 +107,22 @@
         cell.blogArticle=[self.dataArray[self.currentBtnIndex] objectAtIndex:indexPath.row];
         return cell;
     }else{
+        
+        
         return [UITableViewCell new];
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(self.currentBtnIndex==0){
+        return 300;
+    }else{
+        return 116;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -161,12 +173,12 @@
 }
 
 - (void)setDataArray:(NSArray *)dataArray{
+    [self.mj_footer endRefreshing];
     if(dataArray.count){
         _dataArray=dataArray;
         self.page++;
         [self reloadData];
     }
-    [self.mj_footer endRefreshing];
 }
 
 

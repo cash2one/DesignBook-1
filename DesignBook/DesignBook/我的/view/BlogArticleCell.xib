@@ -70,7 +70,7 @@
                 <outlet property="readBtn" destination="NZi-H7-brd" id="rhK-fr-7Yu"/>
                 <outlet property="titleLabel" destination="2CH-F1-kag" id="fLl-Js-XeV"/>
             </connections>
-            <point key="canvasLocation" x="276" y="202"/>
+            <point key="canvasLocation" x="276" y="201"/>
         </tableViewCell>
     </objects>
     <resources>

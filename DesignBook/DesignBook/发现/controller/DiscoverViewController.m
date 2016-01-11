@@ -8,6 +8,7 @@
 
 #import "DiscoverViewController.h"
 #import "DisSearchDesViewController.h"
+#import "SearchViewController.h"
 #import "WebViewController.h"
 #import "DiscoverMainView.h"
 
@@ -37,7 +38,6 @@
     [cancleBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [cancleBtn setTitle:@"取消" forState:UIControlStateNormal];
     cancleBtn.frame=CGRectMake(WIDTH-60, 28, 60, 28);
-    [cancleBtn addTarget:self action:@selector(cancleBtnTouch:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:cancleBtn];
     
     
@@ -50,6 +50,17 @@
     tf.leftView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"ico_find_search"]];
     tf.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:tf];
+    UIImageView * iv=[[UIImageView alloc]initWithFrame:CGRectMake(8, 28, WIDTH-16, 28)];
+//    iv.image=[UIImage imageNamed:@"guidance_page04"];
+    [self.view addSubview:iv];
+    iv.userInteractionEnabled=YES;
+    UITapGestureRecognizer * tgr=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(textFiledTouch)];
+    [iv addGestureRecognizer:tgr];
+}
+
+- (void)textFiledTouch{
+    SearchViewController * con=[SearchViewController new];
+    [self.navigationController pushViewController:con animated:NO];
 }
 
 - (void)btnTouchAndIndex:(NSInteger)index{
@@ -76,33 +87,6 @@
     }else{
         [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"tel://400-680-8509,9999"]];
     }
-}
-
-#pragma mark - search框协议方法
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
-    [UIView animateWithDuration:0.1 animations:^{
-        textField.width=WIDTH-76;
-    }];
-    textField.placeholder=@"搜索案例/图片/问答/设计师";
-    self.mainView.hidden=YES;
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField{
-    [UIView animateWithDuration:0.1 animations:^{
-        textField.width=WIDTH-16;
-    }];
-    textField.placeholder=@"搜索案例/图片/问答...";
-    self.mainView.hidden=NO;
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    return YES;
-}
-
-
-- (void)cancleBtnTouch:(UIButton *)btn{
-    self.mainView.hidden=NO;
-    [self.view endEditing:YES];
 }
 
 #pragma mark - 系统协议方法
